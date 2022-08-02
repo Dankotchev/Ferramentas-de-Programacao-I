@@ -1,4 +1,4 @@
-package br.edu.ifsp.pep.aulainalgural.modelo;
+package br.edu.ifsp.pep.aulainaugural.modelo;
 
 import java.math.BigDecimal;
 import java.util.Date;
