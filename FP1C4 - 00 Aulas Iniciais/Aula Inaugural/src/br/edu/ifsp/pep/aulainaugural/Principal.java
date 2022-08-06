@@ -13,18 +13,31 @@ public class Principal {
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("FP1C4AulaInauguralPU");
 
-//        Pessoa pessoa = new Pessoa();
-//        pessoa.setDataNascimento(new Date());
-//        pessoa.setNome("Danilo");
-//        pessoa.setSalario(3000.656);                                            // 0000.d pois o valor é um Double
-        Pessoa pessoa = new Pessoa("Danilo", new BigDecimal(3520.6589), new Date());
+        // Pessoas sendo criadas para os testes ::
+        Pessoa pessoa1 = new Pessoa();
+        pessoa1.setDataNascimento(new Date());
+        pessoa1.setNome("Danilo");
+        pessoa1.setSalario(new BigDecimal(3000.5689));   // 0000.d pois o valor é um Double
+        pessoa1.setEmail("danilo@email.com");
+        pessoa1.setLogradouro("Rua Natal");
+        pessoa1.setNumero(1657);
 
+        Pessoa pessoa2 = new Pessoa();
+        pessoa2.setDataNascimento(new Date());
+        pessoa2.setNome("Daniele");
+        pessoa2.setSalario(new BigDecimal(8989.8989));
+        pessoa2.setEmail("daniele@email.com");
+        pessoa2.setLogradouro("Rua Natal");
+        pessoa2.setNumero(5716);
+
+        // Criando
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();                                            // Iniciar uma transação
 
-//        em.persist(pessoa);     // Insert (lá no Banco de Dados)
-        em.merge(pessoa);       // Update se objeto existir, senão Insert
+        em.persist(pessoa1);     // Insert (lá no Banco de Dados)
+        em.persist(pessoa2);
+//        em.merge(pessoa1);        // Update se objeto existir, senão Insert
 
         em.getTransaction().commit();                                           // Finaliza uma transação
     }
