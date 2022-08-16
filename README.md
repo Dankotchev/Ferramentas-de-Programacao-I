@@ -14,5 +14,6 @@ O curso foi desenvolvido utilizando JAVA/SWING, banco de dados mySQL/MariaDB e o
   	- @Id;
   	- @GenerateValue;
   	- @Columm;
-  	- ManyToOne.
+  	- ManyToOne;
+  	- OneToMany.
   - Conceitos de versionamento _(Git e GitHub)_
