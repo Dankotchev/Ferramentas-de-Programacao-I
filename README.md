@@ -7,6 +7,12 @@ Repositório contendo resoluções de atividades, listas de exercícios e provas
 O curso foi desenvolvido utilizando JAVA/SWING, banco de dados mySQL/MariaDB e o framework de persistência Eclipse. A disciplina ministrada pelo professor César Alberto da Silva.
 
 ## _Conteúdo Abordado_:
-
-- Aulas Iniciais:
-  - Conceitos básicos de Persistência e JPA
+- Aulas Iniciais
+  - Conceitos básicos de Persistência e JPA:
+  	- @Entity;
+  	- @Table;
+  	- @Id;
+  	- @GenerateValue;
+  	- @Columm;
+  	- ManyToOne.
+  - Conceitos de versionamento _(Git e GitHub)_
