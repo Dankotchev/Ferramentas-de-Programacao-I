@@ -5,7 +5,7 @@
     <class>br.edu.ifsp.pep.mm.modelo.Acessorio</class>
     <class>br.edu.ifsp.pep.mm.modelo.Veiculo</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/concessionaria?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/concessionaria?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;createDatabaseIfNotExist=true&amp;serverTimezone=UTC&amp;serverTimezone=America/Sao_Paulo"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="ifsp"/>
