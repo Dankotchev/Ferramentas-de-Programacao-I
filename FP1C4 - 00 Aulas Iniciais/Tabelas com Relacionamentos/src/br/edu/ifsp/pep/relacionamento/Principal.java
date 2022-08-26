@@ -10,6 +10,7 @@ import java.util.List;
 public class Principal {
 
     private static final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private static final CategoriaDAO categoriaDAO = new CategoriaDAO();
 
     public static void main(String[] args) {
         adicionarProdutos();
@@ -22,7 +23,6 @@ public class Principal {
 
         Categoria categoria = new Categoria();
         Produto produto = new Produto();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
 
         categoria.setDescricao("Informática");
         categoriaDAO.inserir(categoria);
@@ -44,7 +44,6 @@ public class Principal {
     }
 
     private static void adicionarProdutos() {
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
 
         for (int i = 0; i < 10; i++) {
             Categoria categoria = new Categoria();
