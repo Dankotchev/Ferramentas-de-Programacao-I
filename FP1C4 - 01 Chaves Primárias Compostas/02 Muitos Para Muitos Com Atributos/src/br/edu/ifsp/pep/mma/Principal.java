@@ -1,12 +1,12 @@
 package br.edu.ifsp.pep.mma;
 
-import br.edu.ifsp.pep.mma.dao.ProdutoDAO;
-
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class Principal {
 
     public static void main(String[] args) {
-        ProdutoDAO produtoDAO = new ProdutoDAO();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MMA_PU");
     }
 
 }

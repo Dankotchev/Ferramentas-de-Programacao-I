@@ -3,6 +3,7 @@ package br.edu.ifsp.pep.mma.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,6 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "itens")
 public class Itens implements Serializable {
+
+    @EmbeddedId
+    private ItensPK itensPK;
 
     // Relacionamento de Muitos para Um
     @ManyToOne
@@ -26,9 +30,8 @@ public class Itens implements Serializable {
 
     @Column(name = "preco", nullable = false, precision = 8, scale = 2)
     private BigDecimal preco;
-    
-    // Código Gerado ...
 
+    // Código Gerado ...
     public Produto getProduto() {
         return produto;
     }
@@ -63,7 +66,5 @@ public class Itens implements Serializable {
 
     public Itens() {
     }
-    
-    
 
 }

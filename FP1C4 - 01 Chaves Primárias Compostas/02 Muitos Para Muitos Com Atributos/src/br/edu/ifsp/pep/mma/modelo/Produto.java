@@ -7,30 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "produto")
-public class Produto implements Serializable{
+public class Produto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
+
     @Column(name = "valor", nullable = false, precision = 8, scale = 2)
     private BigDecimal valor;
-    private Integer quantidade;
-    
-    // Relacionamento de Muitos para Um
-    @JoinColumn(name = "itens_id", nullable = false)
-    @OneToMany(mappedBy = "categoria")
-    private Itens itens;
-    
-    // Código Gerado ...
 
+    @Column(name = "quantidade", nullable = false)
+    private Integer quantidade;
+
+    // Código Gerado ...
     public Integer getId() {
         return id;
     }
@@ -62,5 +56,5 @@ public class Produto implements Serializable{
         this.valor = valor;
         this.quantidade = quantidade;
     }
-    
+
 }

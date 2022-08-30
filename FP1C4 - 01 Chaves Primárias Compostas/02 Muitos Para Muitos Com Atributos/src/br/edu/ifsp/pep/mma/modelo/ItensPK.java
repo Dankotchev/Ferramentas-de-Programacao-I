@@ -2,15 +2,19 @@ package br.edu.ifsp.pep.mma.modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ItensPK implements Serializable{
-    private Integer produto_id;
-    private Integer venda_id;
-    
-    //
+public class ItensPK implements Serializable {
 
+    @Column(name = "produto_id", insertable = false, updatable = false)
+    private Integer produto_id;
+
+    @Column(name = "venda_id", insertable = false, updatable = false)
+    private Integer venda_id;
+
+    // Código Gerado ...
     public Integer getProduto_id() {
         return produto_id;
     }
@@ -52,6 +56,5 @@ public class ItensPK implements Serializable{
         }
         return Objects.equals(this.venda_id, other.venda_id);
     }
-    
-    
+
 }

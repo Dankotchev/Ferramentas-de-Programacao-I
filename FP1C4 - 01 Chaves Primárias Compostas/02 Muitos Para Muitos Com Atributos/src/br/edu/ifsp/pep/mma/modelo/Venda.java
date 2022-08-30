@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,11 +20,6 @@ public class Venda implements Serializable {
 
     @Column(name = "data", nullable = false)
     private Date data;
-
-    // Relacionamento de Muitos para Um
-    @JoinColumn(name = "itens_id", nullable = false)
-    @ManyToOne
-    private Itens itens;
 
     // Código Gerado ...
     public Integer getId() {
