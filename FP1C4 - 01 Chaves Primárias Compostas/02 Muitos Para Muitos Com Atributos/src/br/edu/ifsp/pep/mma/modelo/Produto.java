@@ -23,6 +23,9 @@ public class Produto implements Serializable {
 
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
+    
+    @Column(name = "descricao", nullable = false, length = 60)
+    private String descricao;
 
     // Código Gerado ...
     public Integer getId() {
@@ -49,8 +52,24 @@ public class Produto implements Serializable {
         this.quantidade = quantidade;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     public Produto() {
     }
+
+    public Produto(BigDecimal valor, Integer quantidade, String descricao) {
+        this.valor = valor;
+        this.quantidade = quantidade;
+        this.descricao = descricao;
+    }
+    
+    
 
     public Produto(BigDecimal valor, Integer quantidade) {
         this.valor = valor;

@@ -40,7 +40,7 @@ public class Venda implements Serializable {
 
     public Venda() {
     }
-
+    
     public Venda(Date data) {
         this.data = data;
     }
