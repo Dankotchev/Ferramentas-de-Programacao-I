@@ -68,12 +68,9 @@ public class Produto implements Serializable {
         this.quantidade = quantidade;
         this.descricao = descricao;
     }
-    
-    
 
-    public Produto(BigDecimal valor, Integer quantidade) {
-        this.valor = valor;
-        this.quantidade = quantidade;
+    @Override
+    public String toString() {
+        return "Produto{" + "id=" + id + ", valor=" + valor + ", quantidade=" + quantidade + ", descricao=" + descricao + '}';
     }
-
 }
