@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ItensPK implements Serializable {
+public class ItemPK implements Serializable {
 
     @Column(name = "produto_id", insertable = false, updatable = false)
     private Integer produto_id;
@@ -50,7 +50,7 @@ public class ItensPK implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ItensPK other = (ItensPK) obj;
+        final ItemPK other = (ItemPK) obj;
         if (!Objects.equals(this.produto_id, other.produto_id)) {
             return false;
         }

@@ -2,11 +2,14 @@ package br.edu.ifsp.pep.mma.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +23,10 @@ public class Venda implements Serializable {
 
     @Column(name = "data", nullable = false)
     private Date data;
+    
+    @OneToMany(mappedBy = "venda",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Item> itens;
 
     // Código Gerado ...
     public Integer getId() {
@@ -38,6 +45,14 @@ public class Venda implements Serializable {
         this.data = data;
     }
 
+    public List<Item> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
+    }
+    
     public Venda() {
     }
     

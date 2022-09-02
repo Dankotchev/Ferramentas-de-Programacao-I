@@ -11,10 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "itens")
-public class Itens implements Serializable {
+public class Item implements Serializable {
 
     @EmbeddedId
-    private ItensPK itensPK;
+    private ItemPK itensPK;
 
     // Relacionamento de Muitos para Um
     @ManyToOne
@@ -64,7 +64,15 @@ public class Itens implements Serializable {
         this.preco = preco;
     }
 
-    public Itens() {
+    public ItemPK getItensPK() {
+        return itensPK;
+    }
+
+    public void setItensPK(ItemPK itensPK) {
+        this.itensPK = itensPK;
+    }
+
+    public Item() {
     }
 
 }
