@@ -14,6 +14,10 @@ O curso foi desenvolvido utilizando JAVA/SWING, banco de dados mySQL/MariaDB e o
   	- @Id;
   	- @GenerateValue;
   	- @Columm;
-  	- ManyToOne;
-  	- OneToMany.
+  	- @ManyToOne;
+  	- @OneToMany.
   - Conceitos de versionamento _(Git e GitHub)_
+- Outros conceitos de JPA:
+  - Chave primária composta usando @idClass e @EmbeddedId;
+  - Herança de classes:
+    - Estratégia Single Table
