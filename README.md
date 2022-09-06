@@ -20,4 +20,6 @@ O curso foi desenvolvido utilizando JAVA/SWING, banco de dados mySQL/MariaDB e o
 - Outros conceitos de JPA:
   - Chave primária composta usando @idClass e @EmbeddedId;
   - Herança de classes:
-    - Estratégia Single Table
+    - Estratégia _Single Table_
+    - Estratégia _Join Table_
+    - Estratégia _Table per Class_
