@@ -1,4 +1,4 @@
-package br.edu.ifsp.pep.heranca.modelo;
+package br.edu.ifsp.pep.herancajoin.modelo;
 
 import java.math.BigDecimal;
 import javax.persistence.Column;
