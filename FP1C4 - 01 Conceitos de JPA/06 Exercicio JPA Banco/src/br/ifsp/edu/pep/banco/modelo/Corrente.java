@@ -4,14 +4,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @IdClass(CorrentePK.class)
+@Table(name = "corrente")
 public class Corrente implements Serializable {
 
     @Id
@@ -20,6 +24,7 @@ public class Corrente implements Serializable {
 
     @Id
     @Column(name = "numero_conta")
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numeroConta;
 
     @Column(name = "saldo", nullable = false)

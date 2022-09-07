@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "poupanca")
 public class Poupanca extends Corrente {
 
     @Column(name = "aniversario", nullable = false)
