@@ -17,12 +17,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "pessoa")
 @NamedQueries({
-    @NamedQuery(name = "Pessoa.buscarPorId", 
-                query = "SELECT p FROM Pessoa p WHERE p.id = :id"),
+    @NamedQuery(name = "Pessoa.buscarPorId",
+            query = "SELECT p FROM Pessoa p WHERE p.id = :id"),
     @NamedQuery(name = "Pessoa.buscarPorNome",
-                query = "SELECT p FROM Pessoa p WHERE p.nome LIKE :nome"),
+            query = "SELECT p FROM Pessoa p WHERE p.nome LIKE :nome"),
     @NamedQuery(name = "Pessoa.buscarPorSalario",
-                query = "SELECT p FROM Pessoa p WHERE p.salario > :salario")
+            query = "SELECT p FROM Pessoa p WHERE p.salario > :salario")
 })
 public class Pessoa implements Serializable {
 

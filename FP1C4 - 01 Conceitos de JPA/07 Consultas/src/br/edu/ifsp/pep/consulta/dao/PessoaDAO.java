@@ -1,6 +1,7 @@
 package br.edu.ifsp.pep.consulta.dao;
 
 import br.edu.ifsp.pep.consulta.modelo.Pessoa;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,8 +25,8 @@ public class PessoaDAO extends AbstractDAO<Pessoa> {
 
         return query.getResultList();
     }
-    
-        public List<Pessoa> buscarPorSalario(int salario) {
+
+    public List<Pessoa> buscarPorSalario(BigDecimal salario) {
         EntityManager em = getEntityManager();
         TypedQuery<Pessoa> query = em.createNamedQuery(
                 "Pessoa.buscarPorSalario", Pessoa.class);

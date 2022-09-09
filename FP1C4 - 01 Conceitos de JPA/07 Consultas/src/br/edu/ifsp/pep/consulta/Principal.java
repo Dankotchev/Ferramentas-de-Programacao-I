@@ -27,10 +27,9 @@ public class Principal {
         }
 
         System.out.println("Pessoas com salario maior que 5000");
-        List<Pessoa> buscarPorSalario = pessoaDAO.buscarPorSalario(5000);
+        List<Pessoa> buscarPorSalario = pessoaDAO.buscarPorSalario(new BigDecimal(5000));
         for (Pessoa pessoa : buscarPorSalario) {
             System.out.println(pessoa);
         }
     }
-
 }
