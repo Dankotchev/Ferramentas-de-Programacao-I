@@ -35,4 +35,9 @@ public class PessoaDAO extends AbstractDAO<Pessoa> {
 
         return query.getResultList();
     }
+    
+    public void verificarEstadoCicloDeVida(){
+        Pessoa p = new Pessoa("Danilo", new Date(), new BigDecimal(5000));
+        
+    }
 }
