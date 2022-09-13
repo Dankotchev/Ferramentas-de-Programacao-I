@@ -1,5 +1,6 @@
 package br.edu.ifsp.pep.consulta.dao;
 
+import br.edu.ifsp.pep.bibliotecas.dao.AbstractDAO;
 import br.edu.ifsp.pep.consulta.modelo.Pessoa;
 import java.math.BigDecimal;
 import java.util.List;

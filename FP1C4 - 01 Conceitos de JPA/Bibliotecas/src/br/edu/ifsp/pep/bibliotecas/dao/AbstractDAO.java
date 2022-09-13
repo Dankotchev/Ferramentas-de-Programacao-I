@@ -1,4 +1,4 @@
-package br.edu.ifsp.pep.cpc.dao;
+package br.edu.ifsp.pep.bibliotecas.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,7 +10,7 @@ public class AbstractDAO<T> {
 
     // Cria a "fabríca" ao iniciar a classe
     public AbstractDAO() {
-        emf = Persistence.createEntityManagerFactory("Chaves_CompostasPU");
+        emf = Persistence.createEntityManagerFactory("ConsultasPU");
     }
 
     // Cria o "gerente" sempre que for necessário
