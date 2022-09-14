@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class AbstractDAO<T> {
+public abstract class AbstractDAO<T> {
 
     private EntityManagerFactory emf;
 
@@ -23,6 +23,7 @@ public class AbstractDAO<T> {
         em.getTransaction().begin();
         em.persist(entidade);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void alterar(T entidade) {
@@ -30,5 +31,14 @@ public class AbstractDAO<T> {
         em.getTransaction().begin();
         em.merge(entidade);
         em.getTransaction().commit();
+        em.close();
+    }
+
+    public void remover(T entidade) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(em.merge(entidade));
+        em.getTransaction().commit();
+        em.close();
     }
 }
