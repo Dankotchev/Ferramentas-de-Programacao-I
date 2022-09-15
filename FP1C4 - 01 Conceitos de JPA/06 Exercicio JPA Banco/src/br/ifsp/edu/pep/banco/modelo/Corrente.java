@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Inheritance;
@@ -24,13 +22,12 @@ public class Corrente implements Serializable {
 
     @Id
     @Column(name = "numero_conta")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numeroConta;
 
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo;
 
-    //
+    // Código Gerado ....
     public Integer getAgencia() {
         return agencia;
     }
@@ -55,11 +52,18 @@ public class Corrente implements Serializable {
         this.saldo = saldo;
     }
 
-    public Corrente(Integer numeroConta, BigDecimal saldo) {
+    public Corrente(Integer agencia, Integer numeroConta, BigDecimal saldo) {
+        this.agencia = agencia;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
     }
 
     public Corrente() {
     }
+
+    @Override
+    public String toString() {
+        return "Corrente{" + "agencia=" + agencia + ", numeroConta=" + numeroConta + ", saldo=" + saldo + '}';
+    }
+
 }
