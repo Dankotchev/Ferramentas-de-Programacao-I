@@ -7,15 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import javax.persistence.Table;
 
-/**
- *
- * @author daniloquirino
- */
 @Entity
 @Table(name = "livro")
+@NamedQueries({
+    @NamedQuery(name = "buscarPorCodigo",
+            query = "SELECT l FROM Livro l WHERE l.codigo = :codigo"),
+    @NamedQuery(name = "buscarPorISBN",
+            query = "SELECT l FROM Livro WHERE L.isbn = :isbn"),
+    @NamedQuery(name = "buscarPorAutor",
+            query = "SELECT l FROM Livro WHERE l.autor = :autor"),
+    @NamedQuery(name = "buscarPorTitulo",
+            query = "SELECT l FROM Livro WHERE l.titulo LIKE :titulo")
+}
+)
 public class Livro implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
