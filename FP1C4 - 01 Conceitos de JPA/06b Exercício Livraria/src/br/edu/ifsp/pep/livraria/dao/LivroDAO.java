@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-public class LivroDAO extends AbstractDAO {
+public class LivroDAO extends AbstractDAO<Livro>{
 
     public Livro buscarPorCodigo(Integer codigo) {
         EntityManager em = getEntityManager();
