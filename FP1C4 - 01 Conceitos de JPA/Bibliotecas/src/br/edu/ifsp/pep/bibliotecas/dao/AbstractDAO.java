@@ -10,7 +10,7 @@ public abstract class AbstractDAO<T> {
 
     // Cria a "fabríca" ao iniciar a classe
     public AbstractDAO() {
-        emf = Persistence.createEntityManagerFactory("BancoPU");
+        emf = Persistence.createEntityManagerFactory("LivrariaPU");
     }
 
     // Cria o "gerente" sempre que for necessário

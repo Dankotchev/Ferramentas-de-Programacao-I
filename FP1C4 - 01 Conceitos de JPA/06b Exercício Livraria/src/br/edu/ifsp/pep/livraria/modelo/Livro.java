@@ -18,11 +18,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "buscarPorCodigo",
             query = "SELECT l FROM Livro l WHERE l.codigo = :codigo"),
     @NamedQuery(name = "buscarPorISBN",
-            query = "SELECT l FROM Livro WHERE L.isbn = :isbn"),
+            query = "SELECT l FROM Livro l WHERE l.isbn = :isbn"),
     @NamedQuery(name = "buscarPorAutor",
-            query = "SELECT l FROM Livro WHERE l.autor = :autor"),
+            query = "SELECT l FROM Livro l WHERE l.autor = :autor"),
     @NamedQuery(name = "buscarPorTitulo",
-            query = "SELECT l FROM Livro WHERE l.titulo LIKE :titulo")
+            query = "SELECT l FROM Livro l WHERE l.titulo LIKE :titulo")
 }
 )
 public class Livro implements Serializable {
