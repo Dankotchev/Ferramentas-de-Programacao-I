@@ -27,6 +27,9 @@ public class Principal {
         inserirFuncionarios();
         inserirLivros();
         inserirVenda();
+        pesquisasLivros();
+        relatorioClientes();
+
     }
 
     private static void inserirLivros() {
@@ -37,11 +40,11 @@ public class Principal {
             Livro livro;
             isbn = isbn + i; // Não é a melhor construção, mas para testar está valendo
             if (i % 2 == 0) {
-                autor = "Senhor Macadâmia # " + i;
-                titulo = "Uma Aventura # " + i;
+                autor = "Senhor Macadâmia #" + i;
+                titulo = "Uma Aventura #" + i;
                 livro = new Livro(isbn, autor, titulo, (i + 1) * 58, new BigDecimal((1 + i) * 5.69));
             } else {
-                autor = "Senhorita Nozes # " + 2 * i;
+                autor = "Senhorita Nozes #" + 3 * i;
                 titulo = "Sonhos da " + i + "ª noite de primavera";
                 livro = new Livro(isbn, autor, titulo, i * 118, new BigDecimal((1 + i) * 6.12));
             }
@@ -53,7 +56,7 @@ public class Principal {
     private static void inserirVenda() {
         List<Livro> livros = livroDAO.retornarTodos();
         List<Cliente> clientes = clienteDAO.retornarTodos();
-                
+
         Random random = new Random();
         int nLivro;
         int nCliente;
@@ -96,8 +99,40 @@ public class Principal {
             Funcionario funcionario = new Funcionario(i + 1, new Date(),
                     new BigDecimal(1350), "Funcionário #" + i, "147.654.985-8" + i,
                     new Date(), "(18) 99324-016" + i);
-            
+
             funcionarioDAO.inserir(funcionario);
         }
     }
+
+    private static void pesquisasLivros() {
+        System.out.println("Busca por autor : \"Sehorita Nozes #3\"");
+        List<Livro> buscarPorAutor = livroDAO.buscarPorAutor("Senhorita Nozes #3");
+        for (Livro livro : buscarPorAutor) {
+            System.out.println(livro);
+        }
+
+        System.out.println("Busca por Título: \"Aventura\"");
+        List<Livro> buscarPorTitulo = livroDAO.buscarPorTitulo("Aventura");
+        for (Livro livro : buscarPorTitulo) {
+            System.out.println(livro);
+        }
+
+        System.out.println("Buscar por Código: 7");
+        System.out.println(livroDAO.buscarPorCodigo(7));
+
+        System.out.println("Buscar por ISBN: 12012345");
+        List<Livro> buscarPorISBN = livroDAO.buscarPorISBN("12012345");
+        for (Livro livro : buscarPorISBN) {
+            System.out.println(livro);
+        }
+                
+    }
+
+    private static void relatorioClientes() {
+        List<Cliente> retornarTodos = clienteDAO.retornarTodos();
+        for (Cliente cliente : retornarTodos) {
+            System.out.println(cliente);
+        }
+    }
+
 }

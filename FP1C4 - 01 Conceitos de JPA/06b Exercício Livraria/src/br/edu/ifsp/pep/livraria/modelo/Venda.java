@@ -50,7 +50,7 @@ public class Venda implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
-    }
+    }   
 
     public List<ItemVenda> getItemVendas() {
         return itemVendas;

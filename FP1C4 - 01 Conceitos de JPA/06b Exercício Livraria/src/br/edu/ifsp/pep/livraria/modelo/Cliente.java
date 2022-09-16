@@ -20,10 +20,28 @@ public class Cliente extends Pessoa {
     public BigDecimal getCredito() {
         return credito;
     }
-    
+
     // Relacionamento de um Cliente para muitas Vendas
     @OneToMany(mappedBy = "cliente")
     private List<Venda> compras;
+
+    // Código gerado....
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(super.getId());
+        sb.append("\nNome: ").append(super.getNome());
+        sb.append("\nCredito: R$ ").append(String.format(
+                String.valueOf(getCredito()), 2));
+
+        for (Venda compra : getCompras()) {
+            sb.append("\nID Venda: " + compra.getId());
+            sb.append("\nData: " + compra.getData());
+        }
+
+        return sb.toString();
+
+    }
 
     public void setCredito(BigDecimal credito) {
         this.credito = credito;

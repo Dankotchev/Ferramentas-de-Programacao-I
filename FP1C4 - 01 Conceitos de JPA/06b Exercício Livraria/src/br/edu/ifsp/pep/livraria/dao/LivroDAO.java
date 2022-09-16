@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-public class LivroDAO extends AbstractDAO<Livro>{
+public class LivroDAO extends AbstractDAO<Livro> {
 
     public Livro buscarPorCodigo(Integer codigo) {
         EntityManager em = getEntityManager();
@@ -16,12 +16,12 @@ public class LivroDAO extends AbstractDAO<Livro>{
         return query.getSingleResult();
     }
 
-    public Livro buscarPorISBN(Integer isbn) {
+    public List<Livro> buscarPorISBN(String isbn) {
         EntityManager em = getEntityManager();
         TypedQuery<Livro> query = em.createNamedQuery("buscarPorISBN", Livro.class);
         query.setParameter("isbn", isbn);
 
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     public List<Livro> buscarPorAutor(String autor) {
@@ -39,12 +39,12 @@ public class LivroDAO extends AbstractDAO<Livro>{
 
         return query.getResultList();
     }
-    
-    public List<Livro> retornarTodos(){
+
+    public List<Livro> retornarTodos() {
         EntityManager em = getEntityManager();
         TypedQuery<Livro> query = em.createQuery("SELECT l FROM Livro L", Livro.class);
-        
+
         return query.getResultList();
-                
+
     }
 }
