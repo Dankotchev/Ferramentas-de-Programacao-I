@@ -1,7 +1,11 @@
 package br.edu.ifsp.pep.livraria;
 
+import br.edu.ifsp.pep.livraria.dao.ClienteDAO;
+import br.edu.ifsp.pep.livraria.dao.FuncionarioDAO;
 import br.edu.ifsp.pep.livraria.dao.LivroDAO;
 import br.edu.ifsp.pep.livraria.dao.VendaDAO;
+import br.edu.ifsp.pep.livraria.modelo.Cliente;
+import br.edu.ifsp.pep.livraria.modelo.Funcionario;
 import br.edu.ifsp.pep.livraria.modelo.ItemVenda;
 import br.edu.ifsp.pep.livraria.modelo.Livro;
 import br.edu.ifsp.pep.livraria.modelo.Venda;
@@ -15,10 +19,14 @@ public class Principal {
 
     private static final LivroDAO livroDAO = new LivroDAO();
     private static final VendaDAO vendaDAO = new VendaDAO();
+    private static final ClienteDAO clienteDAO = new ClienteDAO();
+    private static final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     public static void main(String[] args) {
         inserirLivros();
         inserirVenda();
+        inserirClientes();
+        inserirFuncionarios();
     }
 
     private static void inserirLivros() {
@@ -67,6 +75,24 @@ public class Principal {
             venda.setItemVendas(listaItemVenda);
 
             vendaDAO.inserir(venda);
+        }
+    }
+
+    private static void inserirClientes() {
+        for (int i = 0; i < 9; i++) {
+            Cliente cliente = new Cliente(BigDecimal.ZERO, "Cliente #" + i,
+                    "123.456.789-1" + i, new Date(), "(18) 95415-250" + i);
+            clienteDAO.inserir(cliente);
+        }
+    }
+
+    private static void inserirFuncionarios() {
+        for (int i = 0; i < 5; i++) {
+            Funcionario funcionario = new Funcionario(i + 1, new Date(),
+                    new BigDecimal(1350), "Funcionário #" + i, "147.654.985-8" + i,
+                    new Date(), "(18) 99324-016" + i);
+            
+            funcionarioDAO.inserir(funcionario);
         }
     }
 }
