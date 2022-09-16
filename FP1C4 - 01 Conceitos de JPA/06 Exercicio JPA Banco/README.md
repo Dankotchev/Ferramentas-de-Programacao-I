@@ -1,5 +1,21 @@
-# Exercicío: JPA - Modelando um Banco
+# Exercício: JPA - Livraria
 
-Crie um projeto para cadastrar contas de um banco. O banco pode ter contas do tipo poupança e corrente. Todas as contas possuem o número da agência, número da conta e saldo. A conta poupança possui o "dia de aniversário", que é o dia que terá o rendimento do valor aplicado.
+## Objetivo:
 
-O projeto deve conter uma classe principal que permita cadastrar pelo menos um tipo de cada conta.
+Faça um projeto para uma livraria que precisa manter seus Clientes e Funcionário, bem como os livros de seu catálogo a venda.
+
+Também é necessário manter todas as compras dos clientes.
+
+Os Livros são consultados por código único, por isbn, por correspondência exata de nome do autor e por partes de seu título.
+
+Deve ser possível consultar todas as vendas de um determinado cliente.
+
+## Estratégias utilizadas:
+
+- Uso de herança para as classes de Cliente e Funcionários vindo da classe Pessoa
+  - Utilizando a estratégia de _Table per Class_
+- O relacionamento entre Venda e Livro usou da classe ItemVenda  que necessitou de uma chave primária composta, vindo dos relacionamentos _One to Many_
+  - Uso da estratégia de classe _@Embeddable_ para gerar a chave primária composta da Classe ItemVenda
+- Relacionamento de _One to Many_ entre Cliente e Venda
+- _Named Queries_ gerando consultas para a Classe Livro 
+
