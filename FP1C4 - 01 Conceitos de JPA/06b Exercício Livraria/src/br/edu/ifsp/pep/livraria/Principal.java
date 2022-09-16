@@ -23,10 +23,10 @@ public class Principal {
     private static final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     public static void main(String[] args) {
-        inserirLivros();
-        inserirVenda();
         inserirClientes();
         inserirFuncionarios();
+        inserirLivros();
+        inserirVenda();
     }
 
     private static void inserirLivros() {
@@ -52,25 +52,30 @@ public class Principal {
 
     private static void inserirVenda() {
         List<Livro> livros = livroDAO.retornarTodos();
+        List<Cliente> clientes = clienteDAO.retornarTodos();
+                
         Random random = new Random();
-        int k;
+        int nLivro;
+        int nCliente;
 
         for (int i = 0; i < 10; i++) {
             Venda venda = new Venda();
             List<ItemVenda> listaItemVenda = new ArrayList<>();
-            k = random.nextInt(5) + 1;
+            nLivro = random.nextInt(5) + 1;
+            nCliente = random.nextInt(8) + 1;
 
             for (int j = 0; j < 4; j++) {
 
                 ItemVenda itemVenda = new ItemVenda();
                 itemVenda.setVenda(venda);
                 itemVenda.setQuantidade((1 + i));
-                itemVenda.setLivro(livros.get(k));
-                itemVenda.setValorUnitario(livros.get(k).getPreco());
+                itemVenda.setLivro(livros.get(nLivro));
+                itemVenda.setValorUnitario(livros.get(nLivro).getPreco());
 
                 listaItemVenda.add(itemVenda);
-                k++;
+                nLivro++;
             }
+            venda.setCliente(clientes.get(nCliente));
             venda.setData(new Date());
             venda.setItemVendas(listaItemVenda);
 
