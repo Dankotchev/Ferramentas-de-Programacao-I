@@ -42,6 +42,9 @@ public class Veiculo implements Serializable {
 
     @Column(name = "ano", nullable = false)
     private Integer ano;
+    
+    @Column(name = "disponivel", nullable = false)
+    private boolean disponivel;
 
     @ManyToOne
     @JoinColumn(name = "tipo_veiculo_id", nullable = false)
@@ -88,6 +91,14 @@ public class Veiculo implements Serializable {
         this.ano = ano;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+    
     public TipoVeiculo getTipo() {
         return tipo;
     }
@@ -97,6 +108,7 @@ public class Veiculo implements Serializable {
     }
 
     public Veiculo() {
+        this.disponivel = true;
     }
 
     public Veiculo(String placa, String cidade, String modelo, Integer ano, TipoVeiculo tipo) {
@@ -105,5 +117,6 @@ public class Veiculo implements Serializable {
         this.modelo = modelo;
         this.ano = ano;
         this.tipo = tipo;
+        this.disponivel = true;
     }
 }

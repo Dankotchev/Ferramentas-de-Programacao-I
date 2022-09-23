@@ -3,7 +3,6 @@ package br.edu.ifsp.pep.resolucaolocadora.dao;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.Veiculo;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 public class VeiculoDAO extends AbstractDAO<Veiculo> {
 

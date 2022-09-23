@@ -5,12 +5,9 @@ import br.edu.ifsp.pep.resolucaolocadora.dao.LocacaoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.dao.VeiculoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.Cliente;
-import br.edu.ifsp.pep.resolucaolocadora.modelo.Locacao;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.TipoVeiculo;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.Veiculo;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Principal {
 
@@ -20,6 +17,7 @@ public class Principal {
 
     public static void main(String[] args) {
         adicionarVeiculo();
+        adicionarClientes();
     }
 
     private static void inserirVeiculo(Veiculo veiculo) {
@@ -83,17 +81,17 @@ public class Principal {
         }
     }
     
-    private static void locarVeiculo(){
-        Locacao locacao = new Locacao();
-        // Localizar Cliente
-        Cliente cliente = clienteDAO.procurarPorID(1);
-        
-        List<Veiculo> listaVeiculos = veiculoDAO.buscarTodos();
-        
-        List<VeiculoLocado> veiculosLocados = new ArrayList<>();
-        
-        
-        
-        
-    }
+//    private static void locarVeiculo(){
+//        Locacao locacao = new Locacao();
+//        // Localizar Cliente
+//        Cliente cliente = clienteDAO.procurarPorID(1);
+//        
+//        List<Veiculo> listaVeiculos = veiculoDAO.buscarTodos();
+//        
+//        List<VeiculoLocado> veiculosLocados = new ArrayList<>();
+//        
+//        
+//        
+//        
+//    }
 }
