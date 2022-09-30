@@ -5,9 +5,14 @@ import br.edu.ifsp.pep.resolucaolocadora.dao.LocacaoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.dao.VeiculoDAO;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.Cliente;
+import br.edu.ifsp.pep.resolucaolocadora.modelo.Locacao;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.TipoVeiculo;
 import br.edu.ifsp.pep.resolucaolocadora.modelo.Veiculo;
+import br.edu.ifsp.pep.resolucaolocadora.modelo.VeiculoLocado;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Principal {
 
@@ -80,18 +85,54 @@ public class Principal {
             }
         }
     }
+
+    private static void locarVeiculo() {
+        // Localizar Cliente
+        Cliente cliente = clienteDAO.procurarPorID(1);
+
+        // Buscar todos os veículos registrados
+        List<Veiculo> listaVeiculos = veiculoDAO.buscarTodos();
+
+        // Objeto locado
+        Locacao locacao = new Locacao(new Date(), cliente);
+
+        List<VeiculoLocado> veiculosLocados = new ArrayList<>();
+
+        VeiculoLocado veiculoLocado = new VeiculoLocado(
+                listaVeiculos.get(0), locacao, 5);
+        veiculosLocados.add(veiculoLocado);
+
+        veiculoLocado = new VeiculoLocado(listaVeiculos.get(1), locacao, 7);
+        veiculosLocados.add(veiculoLocado);
+
+        locacao.setVeiculosLocados(listaVeiculos);
+
+        try {
+            locacaoDAO.inserir(locacao);
+            double diariaVeiculo0 = listaVeiculos.get(0)
+                    .getTipo().getValorDiaria().doubleValue() * 5;
+
+            double diariaVeiculo1 = listaVeiculos.get(1)
+                    .getTipo().getValorDiaria().doubleValue() * 7;
+
+            System.out.println("Valor da locação do veículo 1: "
+                    + diariaVeiculo0);
+            System.out.println("Valor da locação do veículo 2: "
+                    + diariaVeiculo1);
+            System.out.println("Total da locação: "
+                    + (diariaVeiculo0 + diariaVeiculo1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
-//    private static void locarVeiculo(){
-//        Locacao locacao = new Locacao();
-//        // Localizar Cliente
-//        Cliente cliente = clienteDAO.procurarPorID(1);
-//        
-//        List<Veiculo> listaVeiculos = veiculoDAO.buscarTodos();
-//        
-//        List<VeiculoLocado> veiculosLocados = new ArrayList<>();
-//        
-//        
-//        
-//        
-//    }
+    private static void exibirVeiculosDisponiveisParaLocacao() {
+        List<Veiculo> listaVeiculos = veiculoDAO
+                .buscarVeiculosDisponiveisParaLocacao();
+        
+        for (Veiculo veiculo : listaVeiculos) {
+            System.out.println(veiculo);
+        }
+    }
 }

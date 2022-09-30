@@ -73,12 +73,10 @@ public class VeiculoLocado {
     public VeiculoLocado() {
     }
 
-    public VeiculoLocado(VeiculoLocadoPK veiculoLocadoPK, Veiculo veiculo, Locacao locacao, Integer diasLocado, Date dataDevolucao) {
-        this.veiculoLocadoPK = veiculoLocadoPK;
+    public VeiculoLocado(Veiculo veiculo, Locacao locacao, Integer diasLocado) {
         this.veiculo = veiculo;
         this.locacao = locacao;
         this.diasLocado = diasLocado;
-        this.dataDevolucao = dataDevolucao;
     }
 
 }

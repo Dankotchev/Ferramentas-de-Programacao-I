@@ -26,3 +26,5 @@ O curso foi desenvolvido utilizando JAVA/SWING, banco de dados mySQL/MariaDB e o
   - Ciclo de Vida do JPA:
     - Estados gerenciados, removidos e desanexados;
   - Remoção de um objeto do banco de dados
+  - Triggers
+- Interfaces Gráficas
