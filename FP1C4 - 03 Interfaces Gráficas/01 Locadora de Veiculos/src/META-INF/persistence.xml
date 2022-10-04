@@ -15,4 +15,19 @@
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
+  <persistence-unit name="MySQLLocadoraVeiculosPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>br.edu.ifsp.pep.locadoraveiculo.modelo.Cliente</class>
+    <class>br.edu.ifsp.pep.locadoraveiculo.modelo.Locacao</class>
+    <class>br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo</class>
+    <class>br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo</class>
+    <class>br.edu.ifsp.pep.locadoraveiculo.modelo.VeiculoLocado</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/locadora_resolucao?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="dknilo"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+    </properties>
+  </persistence-unit>
 </persistence>
