@@ -25,7 +25,9 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name = "Veiculo.buscarDisponiveisParaLocacao",
             query = "SELECT v FROM Veiculo v WHERE v.locado = false"),
     @NamedQuery(name = "Veiculo.buscarPorPlacaECidade",
-            query = "SELECT v FROM Veiculo v WHERE v.cidade = :cidade AND v.placa = :placa")
+            query = "SELECT v FROM Veiculo v WHERE v.cidade = :cidade AND v.placa = :placa"),
+    @NamedQuery(name = "Veiclo.buscarPorModelo",
+            query = "SELECT v FROM Veiculo v WHERE v.modelo LIKE :modelo")
 })
 public class Veiculo implements Serializable {
 
@@ -112,6 +114,14 @@ public class Veiculo implements Serializable {
 
     public void setTipo(TipoVeiculo tipo) {
         this.tipo = tipo;
+    }
+    
+    public String getLocado(){
+        String estado = "Não";
+        if (this.locado) {
+            estado = "Sim";
+        }
+        return estado;
     }
 
     public boolean isLocado() {

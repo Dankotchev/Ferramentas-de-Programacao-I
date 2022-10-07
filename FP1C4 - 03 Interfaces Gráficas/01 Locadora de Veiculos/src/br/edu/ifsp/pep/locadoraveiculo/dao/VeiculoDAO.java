@@ -17,6 +17,12 @@ public class VeiculoDAO extends AbstractDAO<Veiculo> {
                 .createNamedQuery("Veiculo.buscarDisponiveisParaLocacao", Veiculo.class)
                 .getResultList();
     }
+    
+    public List<Veiculo> buscarPorModelo (String modelo){
+        return getEntityManager().createNamedQuery("Veiclo.buscarPorModelo", Veiculo.class)
+                .setParameter("modelo", "%" + modelo + "%")
+                .getResultList();
+    }
 
     @Override
     public void inserir(Veiculo veiculo) throws Exception {
