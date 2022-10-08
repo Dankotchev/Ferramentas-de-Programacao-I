@@ -23,11 +23,11 @@ public class Principal {
     private static final LocacaoDAO locacaoDAO = new LocacaoDAO();
 
     public static void main(String[] args) {
-        adicionarVeiculos();
-        adicionarClientes();
-//        locarVeiculo();
-//        exibirVeiculosDisponiveisParaLocacao();
-//        devolverVeiculo();
+//        adicionarVeiculos();
+//        adicionarClientes();
+        locarVeiculo();
+        exibirVeiculosDisponiveisParaLocacao();
+        devolverVeiculo();
     }
 
     private static void devolverVeiculo() {

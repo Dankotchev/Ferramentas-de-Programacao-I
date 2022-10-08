@@ -11,4 +11,10 @@ public class TipoVeiculoDAO extends AbstractDAO<TipoVeiculo> {
                 .setParameter("nome", "%" + nome + "%")
                 .getResultList();
     }
+
+    public List<TipoVeiculo> retonarTodos() {
+    return getEntityManager()
+            .createNamedQuery("TipoVeiculo.retonarTodos", TipoVeiculo.class)
+            .getResultList();
+    }
 }

@@ -14,10 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tipo_veiculo")
-@NamedQueries(
+@NamedQueries(value = {
         @NamedQuery (name = "TipoVeiculo.procurarPorNome",
-                query = "SELECT tv FROM TipoVeiculo tv WHERE UPPER(tv.nome) LIKE UPPER(:nome)")
-)
+                query = "SELECT tv FROM TipoVeiculo tv WHERE UPPER(tv.nome) LIKE UPPER(:nome)"),
+        @NamedQuery (name = "TipoVeiculo.retonarTodos",
+                query = "SELECT tv FROM TipoVeiculo tv WHERE tv.id > 0")
+})
 public class TipoVeiculo implements Serializable {
 
     @Id

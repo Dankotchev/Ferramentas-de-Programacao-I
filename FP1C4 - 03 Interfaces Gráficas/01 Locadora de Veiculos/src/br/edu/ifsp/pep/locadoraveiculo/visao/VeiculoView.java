@@ -1,9 +1,11 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
+import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 public class VeiculoView extends javax.swing.JDialog {
@@ -14,6 +16,7 @@ public class VeiculoView extends javax.swing.JDialog {
     public VeiculoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.atualizarComboBoxTipoVeiculo();
     }
 
     private void atualizarTabela() {
@@ -22,7 +25,7 @@ public class VeiculoView extends javax.swing.JDialog {
 
         for (Veiculo veiculo : listaVeiculos) {
             modelo.addRow(new Object[]{veiculo.getModelo(),
-                 veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo()});
+                veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo()});
         }
 
     }
@@ -134,6 +137,8 @@ public class VeiculoView extends javax.swing.JDialog {
 
         btnInserir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnInserir.setText("Inserir");
+        btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnInserir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);
@@ -145,16 +150,16 @@ public class VeiculoView extends javax.swing.JDialog {
         painelBotoesPesquisaLayout.setHorizontalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesPesquisaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnInserir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(243, 243, 243)
+                .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(263, 263, 263))
         );
         painelBotoesPesquisaLayout.setVerticalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelBotoesPesquisaLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesPesquisaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnInserir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout tabPesquisarLayout = new javax.swing.GroupLayout(tabPesquisar);
@@ -164,7 +169,7 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(tabPesquisarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tabPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(tabPesquisarLayout.createSequentialGroup()
                         .addComponent(labelDescricao)
                         .addGap(18, 18, 18)
@@ -185,8 +190,8 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         tabPainel.addTab("Pesquisa", tabPesquisar);
@@ -387,7 +392,7 @@ public class VeiculoView extends javax.swing.JDialog {
             this.txtCidade.requestFocus();
             tudoOK = false;
         }
-        
+
         if (tudoOK) {
             // Inserir no banco de dados
         }
@@ -468,5 +473,11 @@ public class VeiculoView extends javax.swing.JDialog {
         this.txtAno.setText("");
         this.txtPlaca.setText("");
         this.txtCidade.setText("");
+    }
+
+    private void atualizarComboBoxTipoVeiculo() {
+        TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboTipoVeiculo.getModel();
+        modelo.addAll(tipoVeiculoDAO.retonarTodos());
     }
 }

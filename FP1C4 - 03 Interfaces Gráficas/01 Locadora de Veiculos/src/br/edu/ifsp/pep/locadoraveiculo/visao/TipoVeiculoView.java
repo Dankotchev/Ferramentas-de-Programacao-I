@@ -21,9 +21,10 @@ public class TipoVeiculoView extends javax.swing.JDialog {
     }
 
     public void setEstadoCamposTextos(boolean estado) {
-        this.txtNome.setEditable(estado);
-        this.txtValorDiaria.setEditable(estado);
+        this.txtValorDiaria.setVisible(estado);
+        this.labelValorDiaria.setVisible(estado);
         this.tabelaTipoVeiculo.setEnabled(!estado);
+        this.btnPesquisar.setVisible(!estado);
         this.btnPesquisar.setEnabled(!estado);
     }
 
@@ -33,7 +34,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         this.btnExcluir.setEnabled(estado);
         this.btnGravar.setEnabled(!estado);
         this.btnCancelar.setEnabled(!estado);
-        this.btnPesquisar.setEnabled(!estado);
+        this.btnPesquisar.setEnabled(estado);
     }
 
     public void atualizarTabela() {
@@ -70,6 +71,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         labelValorDiaria = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtValorDiaria = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
         painelTabela = new javax.swing.JScrollPane();
         tabelaTipoVeiculo = new javax.swing.JTable();
         painelBotoes = new javax.swing.JPanel();
@@ -78,10 +80,6 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         btnGravar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        painelPesquisar = new javax.swing.JPanel();
-        labelNomePesquisar = new javax.swing.JLabel();
-        txtPesquisa = new javax.swing.JTextField();
-        btnPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,9 +89,23 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Tipo Veiculo");
 
-        labelNome.setText("Nome");
+        labelNome.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        labelNome.setText("Nome:");
 
+        labelValorDiaria.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         labelValorDiaria.setText("Valor da diária:");
+
+        txtNome.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+
+        txtValorDiaria.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+
+        btnPesquisar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
@@ -105,13 +117,17 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                     .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelValorDiaria)
-                            .addComponent(labelNome))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelValorDiaria)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelNome)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNome)
-                            .addComponent(txtValorDiaria))
-                        .addGap(28, 28, 28)))
+                        .addComponent(btnPesquisar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         painelDadosLayout.setVerticalGroup(
@@ -122,7 +138,8 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelValorDiaria)
@@ -130,6 +147,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        tabelaTipoVeiculo.setFont(new java.awt.Font("Fira Sans", 0, 16)); // NOI18N
         tabelaTipoVeiculo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -147,7 +165,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
         tabelaTipoVeiculo.setColumnSelectionAllowed(true);
-        tabelaTipoVeiculo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaTipoVeiculo.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tabelaTipoVeiculo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         painelTabela.setViewportView(tabelaTipoVeiculo);
         tabelaTipoVeiculo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -224,39 +242,6 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        labelNomePesquisar.setText("Nome");
-
-        btnPesquisar.setText("Pesquisar");
-        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelPesquisarLayout = new javax.swing.GroupLayout(painelPesquisar);
-        painelPesquisar.setLayout(painelPesquisarLayout);
-        painelPesquisarLayout.setHorizontalGroup(
-            painelPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelPesquisarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelNomePesquisar)
-                .addGap(18, 18, 18)
-                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnPesquisar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelPesquisarLayout.setVerticalGroup(
-            painelPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelPesquisarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNomePesquisar)
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,8 +251,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelDados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelTabela)
-                    .addComponent(painelPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(painelTabela))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -275,10 +259,8 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -345,7 +327,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        listaTiposVeiculos = tipoVeiculoDAO.procurarPorNome(this.txtPesquisa.getText());
+        listaTiposVeiculos = tipoVeiculoDAO.procurarPorNome(this.txtNome.getText());
         this.atualizarTabela();
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -419,16 +401,13 @@ public class TipoVeiculoView extends javax.swing.JDialog {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelNomePesquisar;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelValorDiaria;
     private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelDados;
-    private javax.swing.JPanel painelPesquisar;
     private javax.swing.JScrollPane painelTabela;
     private javax.swing.JTable tabelaTipoVeiculo;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPesquisa;
     private javax.swing.JTextField txtValorDiaria;
     // End of variables declaration//GEN-END:variables
 }
