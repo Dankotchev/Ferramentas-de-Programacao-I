@@ -34,6 +34,14 @@ public class VeiculoView extends javax.swing.JDialog {
         this.txtPesquisar.setEnabled(estado);
     }
 
+    private void setEstadoCamposTexto(boolean estado) {
+        this.txtModelo.setEnabled(estado);
+        this.txtPlaca.setEnabled(estado);
+        this.txtAno.setEnabled(estado);
+        this.txtCidade.setEnabled(estado);
+        this.comboTipoVeiculo.setEnabled(estado);
+    }
+
     private void atualizarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) this.tabelaVeiculos.getModel();
         modelo.setNumRows(0);
@@ -44,7 +52,22 @@ public class VeiculoView extends javax.swing.JDialog {
                 veiculo.getTipo().getValorDiaria()
             });
         }
+    }
 
+    private void limparCampos() {
+        this.txtModelo.setText("");
+        this.txtAno.setText("");
+        this.txtPlaca.setText("");
+        this.txtCidade.setText("");
+        this.comboTipoVeiculo.setSelectedIndex(-1);
+    }
+
+    private void atualizarComboBoxTipoVeiculo() {
+        this.listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboTipoVeiculo.getModel();
+        for (TipoVeiculo tipo : this.listaTiposVeiculos) {
+            modelo.addElement(tipo.getNome());
+        }
     }
 
     /**
@@ -190,23 +213,24 @@ public class VeiculoView extends javax.swing.JDialog {
         painelBotoesPesquisaLayout.setHorizontalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesPesquisaLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         painelBotoesPesquisaLayout.setVerticalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesPesquisaLayout.createSequentialGroup()
+            .addGroup(painelBotoesPesquisaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout tabPesquisarLayout = new javax.swing.GroupLayout(tabPesquisar);
@@ -238,7 +262,7 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         tabPainel.addTab("Pesquisa", tabPesquisar);
@@ -291,18 +315,18 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(painelBotoesCadastroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         painelBotoesCadastroLayout.setVerticalGroup(
             painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelBotoesCadastroLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesCadastroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGroup(painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         labelCidade.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
@@ -365,8 +389,9 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTipoVeiculo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(painelBotoesCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(painelBotoesCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         tabPainel.addTab("Cadastro", tabCadastro);
@@ -386,7 +411,7 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -468,37 +493,56 @@ public class VeiculoView extends javax.swing.JDialog {
         }
 
         if (tudoOK) {
-            // Inserir no banco de dados
-            if (this.veiculo == null) {
-                this.veiculo = new Veiculo(
-                        this.txtPlaca.getText(),
-                        this.txtCidade.getText(),
-                        this.txtModelo.getText(),
-                        anoInformado,
-                        this.listaTiposVeiculos.get(
-                                this.comboTipoVeiculo.getSelectedIndex()));
+            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
+
+            // Verifica se está realizando uma exclusão, comparando o texto do botão
+            if (this.btnGravar.getText().equals("Excluir")) {
+                mensagem = "Veículo excluído";
+                try {
+                    veiculoDAO.remover(veiculo);
+                    this.mensagem.mCorreto(mensagem);
+                    this.limparCampos();
+                } catch (Exception e) {
+                    this.mensagem.mErro(e.getMessage());
+                } finally {
+                    this.veiculo = null;
+                }
+
+                // Se o texto não foi alterado, é uma inserção ou alteração
             } else {
-                this.veiculo.setPlaca(this.txtPlaca.getText());
-                this.veiculo.setCidade(this.txtCidade.getText());
-                this.veiculo.setModelo(this.txtModelo.getText());
-                this.veiculo.setAno(anoInformado);
-                this.veiculo.setTipo(this.listaTiposVeiculos.get(
-                        this.comboTipoVeiculo.getSelectedIndex()));
-                mensagem = "Veículo alterado";
+                // Realizando uma inserção
+                if (this.veiculo == null) {
+                    this.veiculo = new Veiculo(
+                            this.txtPlaca.getText(),
+                            this.txtCidade.getText(),
+                            this.txtModelo.getText(),
+                            anoInformado,
+                            this.listaTiposVeiculos.get(
+                                    this.comboTipoVeiculo.getSelectedIndex()));
+                } else {
+                    // Realizando uma alteração
+                    this.veiculo.setPlaca(this.txtPlaca.getText());
+                    this.veiculo.setCidade(this.txtCidade.getText());
+                    this.veiculo.setModelo(this.txtModelo.getText());
+                    this.veiculo.setAno(anoInformado);
+                    this.veiculo.setTipo(this.listaTiposVeiculos.get(
+                            this.comboTipoVeiculo.getSelectedIndex()));
+                    mensagem = "Veículo alterado";
+                }
+
+                // Propagando no banco a alteração ou inserção
+                try {
+                    veiculoDAO.alterar(this.veiculo);
+                    this.mensagem.mCorreto(mensagem);
+                    this.limparCampos();
+                    this.setEstadoBotoes(true);
+
+                } catch (Exception e) {
+                    this.mensagem.mErro(e.getMessage());
+                } finally {
+                    this.veiculo = null;
+                }
             }
-
-            try {
-                veiculoDAO.alterar(this.veiculo);
-                this.mensagem.mCorreto(mensagem);
-                this.limparCampos();
-                this.setEstadoBotoes(true);
-
-            } catch (Exception e) {
-                this.mensagem.mErro(e.getMessage());
-            } finally {
-                this.veiculo = null;
-            }
-
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
@@ -509,7 +553,21 @@ public class VeiculoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        if (this.tabelaVeiculos.getSelectedRow() >= 0) {
+            this.veiculo = this.listaVeiculos.get(
+                    this.tabelaVeiculos.getSelectedRow());
+
+            this.txtModelo.setText(this.veiculo.getModelo());
+            this.txtAno.setText(String.valueOf(this.veiculo.getAno()));
+            this.txtPlaca.setText(this.veiculo.getPlaca());
+            this.txtCidade.setText(this.veiculo.getCidade());
+            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
+
+            this.setEstadoBotoes(false);
+            this.setEstadoCamposTexto(false);
+            this.btnGravar.setText("Excluir");
+            this.tabPainel.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
@@ -592,19 +650,4 @@ public class VeiculoView extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 
-    private void limparCampos() {
-        this.txtModelo.setText("");
-        this.txtAno.setText("");
-        this.txtPlaca.setText("");
-        this.txtCidade.setText("");
-        this.comboTipoVeiculo.setSelectedIndex(-1);
-    }
-
-    private void atualizarComboBoxTipoVeiculo() {
-        this.listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboTipoVeiculo.getModel();
-        for (TipoVeiculo tipo : this.listaTiposVeiculos) {
-            modelo.addElement(tipo.getNome());
-        }
-    }
 }
