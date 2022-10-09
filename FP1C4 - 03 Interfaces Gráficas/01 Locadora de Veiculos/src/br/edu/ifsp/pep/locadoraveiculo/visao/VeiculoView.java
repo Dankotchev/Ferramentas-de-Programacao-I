@@ -2,7 +2,9 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
+import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -10,13 +12,26 @@ import javax.swing.table.DefaultTableModel;
 
 public class VeiculoView extends javax.swing.JDialog {
 
+    private final Mensagem mensagem = new Mensagem();
     private static final VeiculoDAO veiculoDAO = new VeiculoDAO();
     private List<Veiculo> listaVeiculos;
+    private Veiculo veiculo;
+    private static final TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
+    private List<TipoVeiculo> listaTiposVeiculos;
 
     public VeiculoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.atualizarComboBoxTipoVeiculo();
+        this.comboTipoVeiculo.setSelectedIndex(-1);
+    }
+
+    private void setEstadoBotoes(boolean estado) {
+        this.btnInserir.setEnabled(estado);
+        this.btnAlterar.setEnabled(estado);
+        this.btnExcluir.setEnabled(estado);
+        this.btnPesquisa.setEnabled(estado);
+        this.txtPesquisar.setEnabled(estado);
     }
 
     private void atualizarTabela() {
@@ -24,8 +39,10 @@ public class VeiculoView extends javax.swing.JDialog {
         modelo.setNumRows(0);
 
         for (Veiculo veiculo : listaVeiculos) {
-            modelo.addRow(new Object[]{veiculo.getModelo(),
-                veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo()});
+            modelo.addRow(new Object[]{veiculo.getModelo(), veiculo.getAno(),
+                veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo().getNome(),
+                veiculo.getTipo().getValorDiaria()
+            });
         }
 
     }
@@ -49,7 +66,9 @@ public class VeiculoView extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaVeiculos = new javax.swing.JTable();
         painelBotoesPesquisa = new javax.swing.JPanel();
+        btnAlterar = new javax.swing.JButton();
         btnInserir = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         tabCadastro = new javax.swing.JPanel();
         labelModelo = new javax.swing.JLabel();
         txtModelo = new javax.swing.JTextField();
@@ -109,11 +128,11 @@ public class VeiculoView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Modelo", "Placa", "Locado", "Tipo", "Valor Diária"
+                "Modelo", "Ano", "Placa", "Locado", "Tipo", "Valor Diária"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -121,7 +140,7 @@ public class VeiculoView extends javax.swing.JDialog {
             }
         });
         tabelaVeiculos.setColumnSelectionAllowed(true);
-        tabelaVeiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaVeiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tabelaVeiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabelaVeiculos);
         tabelaVeiculos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -131,9 +150,20 @@ public class VeiculoView extends javax.swing.JDialog {
             tabelaVeiculos.getColumnModel().getColumn(2).setResizable(false);
             tabelaVeiculos.getColumnModel().getColumn(3).setResizable(false);
             tabelaVeiculos.getColumnModel().getColumn(4).setResizable(false);
+            tabelaVeiculos.getColumnModel().getColumn(5).setResizable(false);
         }
 
         painelBotoesPesquisa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnAlterar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAlterar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnInserir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnInserir.setText("Inserir");
@@ -145,20 +175,37 @@ public class VeiculoView extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnExcluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelBotoesPesquisaLayout = new javax.swing.GroupLayout(painelBotoesPesquisa);
         painelBotoesPesquisa.setLayout(painelBotoesPesquisaLayout);
         painelBotoesPesquisaLayout.setHorizontalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesPesquisaLayout.createSequentialGroup()
-                .addGap(243, 243, 243)
-                .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(263, 263, 263))
+                .addGap(18, 18, 18)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelBotoesPesquisaLayout.setVerticalGroup(
             painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesPesquisaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInserir)
+                .addContainerGap()
+                .addGroup(painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -169,7 +216,7 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(tabPesquisarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tabPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                     .addGroup(tabPesquisarLayout.createSequentialGroup()
                         .addComponent(labelDescricao)
                         .addGap(18, 18, 18)
@@ -190,8 +237,8 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(19, 19, 19))
+                .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabPainel.addTab("Pesquisa", tabPesquisar);
@@ -205,13 +252,11 @@ public class VeiculoView extends javax.swing.JDialog {
         labelPlaca.setText("Placa");
 
         try {
-            txtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-####")));
+            txtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAA-AAAA")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txtPlaca.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-
-        comboTipoVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelTipoVeiculo.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         labelTipoVeiculo.setText("Tipo Veículo");
@@ -245,19 +290,19 @@ public class VeiculoView extends javax.swing.JDialog {
             painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesCadastroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnGravar)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar)
+                .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelBotoesCadastroLayout.setVerticalGroup(
             painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesCadastroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGravar))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGroup(painelBotoesCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         labelCidade.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
@@ -288,13 +333,13 @@ public class VeiculoView extends javax.swing.JDialog {
                                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtAno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                        .addComponent(txtAno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                                         .addComponent(txtPlaca, javax.swing.GroupLayout.Alignment.LEADING))))
                             .addGroup(tabCadastroLayout.createSequentialGroup()
                                 .addComponent(labelTipoVeiculo)
                                 .addGap(43, 43, 43)
                                 .addComponent(comboTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 215, Short.MAX_VALUE)))
+                        .addGap(0, 216, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tabCadastroLayout.setVerticalGroup(
@@ -320,9 +365,8 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTipoVeiculo))
-                .addGap(18, 18, 18)
-                .addComponent(painelBotoesCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(painelBotoesCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         tabPainel.addTab("Cadastro", tabCadastro);
@@ -342,17 +386,28 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        this.tabPainel.setSelectedIndex(1);
-        this.txtModelo.requestFocus();
-    }//GEN-LAST:event_btnInserirActionPerformed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (this.tabelaVeiculos.getSelectedRow() >= 0) {
+            this.veiculo = this.listaVeiculos.get(
+                    this.tabelaVeiculos.getSelectedRow());
+
+            this.txtModelo.setText(this.veiculo.getModelo());
+            this.txtAno.setText(String.valueOf(this.veiculo.getAno()));
+            this.txtPlaca.setText(this.veiculo.getPlaca());
+            this.txtCidade.setText(this.veiculo.getCidade());
+            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
+
+            this.setEstadoBotoes(false);
+            this.tabPainel.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
         listaVeiculos = veiculoDAO.buscarPorModelo(txtPesquisar.getText());
@@ -361,42 +416,101 @@ public class VeiculoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setEstadoBotoes(true);
         this.tabPainel.setSelectedIndex(0);
         this.limparCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        String mensagem = "Veículo cadastrado";
         boolean tudoOK = true;
+        int anoInformado = 0;
 
-        if (this.txtModelo.getText().equals("")) {
+        if (this.txtModelo.getText().isEmpty()) {
+            this.mensagem.mAtencao("Modelo não informado");
             this.txtModelo.requestFocus();
             tudoOK = false;
         }
 
-        if (this.txtPlaca.getText().equals("")) {
+        if (this.txtPlaca.getText().isEmpty()) {
+            this.mensagem.mAtencao("Placa não informado");
             this.txtPlaca.requestFocus();
             tudoOK = false;
         }
 
-        if (this.txtAno.getText().equals("")) {
-            int valorInformado = Integer.parseInt(this.txtAno.getText());
-            if (valorInformado < 1900 && valorInformado > new Date().getYear()) {
-                this.txtAno.requestFocus();
-                tudoOK = false;
-            }
+        try {
+            anoInformado = Integer.parseInt(this.txtAno.getText());
+
+        } catch (NumberFormatException nfe) {
+            this.mensagem.mErro("Formato inválido. Informe um valor numérico");
             this.txtAno.requestFocus();
             tudoOK = false;
         }
 
-        if (this.txtCidade.getText().equals("")) {
+        // Não está fazendo essa verificação
+        System.out.println(anoInformado);
+        if ((anoInformado < 1900) && (anoInformado > (new Date().getYear() + 1900))) {
+            this.mensagem.mAviso("Ano informado inválido");
+            this.txtAno.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtCidade.getText()
+                .isEmpty()) {
+            this.mensagem.mAtencao("Infome uma Cidade");
             this.txtCidade.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.comboTipoVeiculo.getSelectedIndex() < 0) {
+            this.mensagem.mAtencao("Selecione um Tipo de Veículo");
             tudoOK = false;
         }
 
         if (tudoOK) {
             // Inserir no banco de dados
+            if (this.veiculo == null) {
+                this.veiculo = new Veiculo(
+                        this.txtPlaca.getText(),
+                        this.txtCidade.getText(),
+                        this.txtModelo.getText(),
+                        anoInformado,
+                        this.listaTiposVeiculos.get(
+                                this.comboTipoVeiculo.getSelectedIndex()));
+            } else {
+                this.veiculo.setPlaca(this.txtPlaca.getText());
+                this.veiculo.setCidade(this.txtCidade.getText());
+                this.veiculo.setModelo(this.txtModelo.getText());
+                this.veiculo.setAno(anoInformado);
+                this.veiculo.setTipo(this.listaTiposVeiculos.get(
+                        this.comboTipoVeiculo.getSelectedIndex()));
+                mensagem = "Veículo alterado";
+            }
+
+            try {
+                veiculoDAO.alterar(this.veiculo);
+                this.mensagem.mCorreto(mensagem);
+                this.limparCampos();
+                this.setEstadoBotoes(true);
+
+            } catch (Exception e) {
+                this.mensagem.mErro(e.getMessage());
+            } finally {
+                this.veiculo = null;
+            }
+
         }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        this.limparCampos();
+        this.tabPainel.setSelectedIndex(1);
+        this.txtModelo.requestFocus();
+    }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,19 +523,27 @@ public class VeiculoView extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VeiculoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VeiculoView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VeiculoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VeiculoView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VeiculoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VeiculoView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VeiculoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VeiculoView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -441,7 +563,9 @@ public class VeiculoView extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnPesquisa;
@@ -473,11 +597,14 @@ public class VeiculoView extends javax.swing.JDialog {
         this.txtAno.setText("");
         this.txtPlaca.setText("");
         this.txtCidade.setText("");
+        this.comboTipoVeiculo.setSelectedIndex(-1);
     }
 
     private void atualizarComboBoxTipoVeiculo() {
-        TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
+        this.listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboTipoVeiculo.getModel();
-        modelo.addAll(tipoVeiculoDAO.retonarTodos());
+        for (TipoVeiculo tipo : this.listaTiposVeiculos) {
+            modelo.addElement(tipo.getNome());
+        }
     }
 }

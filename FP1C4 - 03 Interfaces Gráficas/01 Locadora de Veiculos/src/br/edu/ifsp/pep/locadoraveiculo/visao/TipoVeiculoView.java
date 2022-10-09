@@ -2,13 +2,14 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
+import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class TipoVeiculoView extends javax.swing.JDialog {
 
+    private final Mensagem mensagem = new Mensagem();
     private static final TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
     private List<TipoVeiculo> listaTiposVeiculos;
     private TipoVeiculo tipoVeiculo; // Utilizar para inserir ou atualzar
@@ -288,8 +289,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
 
             this.txtNome.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um tipo de Veículo.",
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            this.mensagem.mAtencao("Selecione um tipo de Veículo");
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -312,17 +312,14 @@ public class TipoVeiculoView extends javax.swing.JDialog {
 
             try {
                 tipoVeiculoDAO.alterar(tipoVeiculo);
-                JOptionPane.showMessageDialog(null, mensagem);
-
-                 this.resetCampos(evt);
+                this.mensagem.mCorreto(mensagem);
+                this.resetCampos(evt);
 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(),
-                        "Erro", JOptionPane.ERROR_MESSAGE);
+                this.mensagem.mErro(ex.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Informe ao menos 5 caracteres no campo Nome",
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            this.mensagem.mAtencao("Informe ao menos 5 caracteres no campo Nome");
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
@@ -337,15 +334,13 @@ public class TipoVeiculoView extends javax.swing.JDialog {
 
             try {
                 tipoVeiculoDAO.remover(tipoVeiculoSelecionado);
-                JOptionPane.showMessageDialog(null, "Tipo veículo selecionado foi excluido");
+                this.mensagem.mAviso("Tipo veículo selecionado foi excluido");
                 this.btnPesquisarActionPerformed(evt);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,
-                        "Tipo de Veículo não pode ser removido.\nTipo Veículo  possui veículos relacionados",
-                        "Alerta", JOptionPane.WARNING_MESSAGE);
+                this.mensagem.mAviso("Tipo de Veículo não pode ser removido.\nTipo Veículo  possui veículos relacionados");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um tipo de Veículo", "Alerta", JOptionPane.WARNING_MESSAGE);
+            this.mensagem.mAtencao("Selecione um tipo de Veículo");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
