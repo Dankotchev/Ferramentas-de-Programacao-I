@@ -472,9 +472,7 @@ public class VeiculoView extends javax.swing.JDialog {
             tudoOK = false;
         }
 
-        // Não está fazendo essa verificação
-        System.out.println(anoInformado);
-        if ((anoInformado < 1900) && (anoInformado > (new Date().getYear() + 1900))) {
+        if ((anoInformado < 1900) || (anoInformado > (new Date().getYear() + 1900))) {
             this.mensagem.mAviso("Ano informado inválido");
             this.txtAno.requestFocus();
             tudoOK = false;
