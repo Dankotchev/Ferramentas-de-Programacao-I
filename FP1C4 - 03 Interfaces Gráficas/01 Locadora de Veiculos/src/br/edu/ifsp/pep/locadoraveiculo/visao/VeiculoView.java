@@ -108,6 +108,10 @@ public class VeiculoView extends javax.swing.JDialog {
         txtCidade = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(620, 420));
+        setMinimumSize(new java.awt.Dimension(620, 420));
+        setPreferredSize(new java.awt.Dimension(620, 420));
+        setResizable(false);
 
         painelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 

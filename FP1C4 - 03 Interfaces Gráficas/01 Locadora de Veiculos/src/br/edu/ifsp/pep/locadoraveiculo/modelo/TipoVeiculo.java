@@ -64,5 +64,5 @@ public class TipoVeiculo implements Serializable {
     public void setValorDiaria(BigDecimal valorDiaria) {
         this.valorDiaria = valorDiaria;
     }
-
+    
 }

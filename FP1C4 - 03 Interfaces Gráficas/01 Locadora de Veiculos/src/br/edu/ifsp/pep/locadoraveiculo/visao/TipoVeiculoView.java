@@ -30,12 +30,12 @@ public class TipoVeiculoView extends javax.swing.JDialog {
     }
 
     public void setEstadoBotoes(boolean estado) {
-        this.btnInserir.setEnabled(estado);
-        this.btnAlterar.setEnabled(estado);
-        this.btnExcluir.setEnabled(estado);
-        this.btnGravar.setEnabled(!estado);
-        this.btnCancelar.setEnabled(!estado);
-        this.btnPesquisar.setEnabled(estado);
+        this.btnInserir.setVisible(estado);
+        this.btnAlterar.setVisible(estado);
+        this.btnExcluir.setVisible(estado);
+        this.btnGravar.setVisible(!estado);
+        this.btnCancelar.setVisible(!estado);
+        this.btnPesquisar.setVisible(estado);
     }
 
     public void atualizarTabela() {
@@ -73,6 +73,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         txtNome = new javax.swing.JTextField();
         txtValorDiaria = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
+        separadorTitulo = new javax.swing.JSeparator();
         painelTabela = new javax.swing.JScrollPane();
         tabelaTipoVeiculo = new javax.swing.JTable();
         painelBotoes = new javax.swing.JPanel();
@@ -83,10 +84,15 @@ public class TipoVeiculoView extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(620, 420));
+        setMinimumSize(new java.awt.Dimension(620, 420));
+        setPreferredSize(new java.awt.Dimension(620, 420));
+        setResizable(false);
 
+        painelDados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         painelDados.setForeground(new java.awt.Color(255, 255, 255));
 
-        labelTitulo.setFont(new java.awt.Font("Fira Sans", 0, 24)); // NOI18N
+        labelTitulo.setFont(new java.awt.Font("Fira Sans", 1, 24)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Tipo Veiculo");
 
@@ -108,6 +114,8 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
 
+        separadorTitulo.setBackground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
@@ -121,33 +129,38 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                             .addGroup(painelDadosLayout.createSequentialGroup()
                                 .addComponent(labelValorDiaria)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(painelDadosLayout.createSequentialGroup()
                                 .addComponent(labelNome)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPesquisar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(btnPesquisar)))
                 .addContainerGap())
+            .addComponent(separadorTitulo, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelTitulo)
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
+                .addComponent(separadorTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar))
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelValorDiaria)
-                    .addComponent(txtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        painelTabela.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        tabelaTipoVeiculo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tabelaTipoVeiculo.setFont(new java.awt.Font("Fira Sans", 0, 16)); // NOI18N
         tabelaTipoVeiculo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,8 +189,9 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             tabelaTipoVeiculo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        painelBotoes.setBorder(new javax.swing.border.MatteBorder(null));
+        painelBotoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        btnInserir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +199,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +207,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
 
+        btnGravar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +215,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,6 +223,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,28 +237,32 @@ public class TipoVeiculoView extends javax.swing.JDialog {
             painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnInserir)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnAlterar)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnExcluir)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnGravar)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         painelBotoesLayout.setVerticalGroup(
             painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelBotoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInserir)
-                    .addComponent(btnAlterar)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnGravar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                        .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,8 +283,8 @@ public class TipoVeiculoView extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -401,6 +423,7 @@ public class TipoVeiculoView extends javax.swing.JDialog {
     private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelDados;
     private javax.swing.JScrollPane painelTabela;
+    private javax.swing.JSeparator separadorTitulo;
     private javax.swing.JTable tabelaTipoVeiculo;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtValorDiaria;
