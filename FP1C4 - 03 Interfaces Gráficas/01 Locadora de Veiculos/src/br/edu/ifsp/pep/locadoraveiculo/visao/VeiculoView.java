@@ -43,14 +43,18 @@ public class VeiculoView extends javax.swing.JDialog {
     }
 
     private void atualizarTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) this.tabelaVeiculos.getModel();
-        modelo.setNumRows(0);
+        if (listaVeiculos.isEmpty()) {
+            this.mensagem.mAviso("Não há veículos cadastrados");
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) this.tabelaVeiculos.getModel();
+            modelo.setNumRows(0);
 
-        for (Veiculo veiculo : listaVeiculos) {
-            modelo.addRow(new Object[]{veiculo.getModelo(), veiculo.getAno(),
-                veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo().getNome(),
-                veiculo.getTipo().getValorDiaria()
-            });
+            for (Veiculo veiculo : listaVeiculos) {
+                modelo.addRow(new Object[]{veiculo.getModelo(), veiculo.getAno(),
+                    veiculo.getPlaca(), veiculo.getLocado(), veiculo.getTipo().getNome(),
+                    veiculo.getTipo().getValorDiaria()
+                });
+            }
         }
     }
 
@@ -110,7 +114,7 @@ public class VeiculoView extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(620, 420));
         setMinimumSize(new java.awt.Dimension(620, 420));
-        setPreferredSize(new java.awt.Dimension(620, 420));
+        setPreferredSize(new java.awt.Dimension(630, 430));
         setResizable(false);
 
         painelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -244,7 +248,7 @@ public class VeiculoView extends javax.swing.JDialog {
             .addGroup(tabPesquisarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tabPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                     .addGroup(tabPesquisarLayout.createSequentialGroup()
                         .addComponent(labelDescricao)
                         .addGap(18, 18, 18)
@@ -367,7 +371,7 @@ public class VeiculoView extends javax.swing.JDialog {
                                 .addComponent(labelTipoVeiculo)
                                 .addGap(43, 43, 43)
                                 .addComponent(comboTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 216, Short.MAX_VALUE)))
+                        .addGap(0, 219, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tabCadastroLayout.setVerticalGroup(
@@ -416,7 +420,7 @@ public class VeiculoView extends javax.swing.JDialog {
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
