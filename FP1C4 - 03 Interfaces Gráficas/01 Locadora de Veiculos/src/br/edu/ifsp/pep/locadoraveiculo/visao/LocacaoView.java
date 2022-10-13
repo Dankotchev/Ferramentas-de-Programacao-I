@@ -1,8 +1,12 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
+import br.edu.ifsp.pep.locadoraveiculo.dao.LocacaoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Locacao;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.VeiculoLocado;
 import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class LocacaoView extends javax.swing.JDialog {
 
     private final Mensagem mensagem = new Mensagem();
+    private Date hoje = new Date();
     private VeiculoDAO veiculoDAO = new VeiculoDAO();
     private List<Veiculo> listaVeiculos = new ArrayList<>();
 
@@ -30,7 +35,7 @@ public class LocacaoView extends javax.swing.JDialog {
     }
 
     private void setDataAtual() {
-        this.jCalendarData.setDate(new Date());
+        this.jCalendarData.setDate(this.hoje);
     }
 
     private void atualizarTabelaResumoLocacao() {
@@ -321,7 +326,58 @@ public class LocacaoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        // TODO add your handling code here:
+        boolean tudoOK = true;
+        int diasLocado = (int) this.spinnerQtdDias.getValue();
+
+        if (this.txtCliente.getText().isEmpty()) {
+            this.mensagem.mAviso("Informe um Cliente");
+            this.txtCliente.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.hoje.after(this.jCalendarData.getDate())) {
+            this.mensagem.mAviso("Informe uma data válida");
+            this.jCalendarData.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.listaVeiculos.isEmpty()) {
+            this.mensagem.mAviso("Nenhum Veículo locado");
+            this.comboVeiculos.requestFocus();
+            tudoOK = false;
+        }
+
+        if (tudoOK) {
+            if (this.mensagem.mSimNao("Finalizar?")) {
+                System.out.println("OK -- Gravou");
+//                BigDecimal valorTotalLocacao = BigDecimal.ZERO;
+//                Locacao locacao = new Locacao();
+//                LocacaoDAO locacaoDAO = new LocacaoDAO();
+//                VeiculoLocado veiculoLocado;
+//                List<VeiculoLocado> listaVeiculosLocado = new ArrayList<>();
+//
+//                // Inserindo Veículos selecionados na lista de VeiculosLocados
+//                for (Veiculo veiculo : this.listaVeiculos) {
+//                    veiculoLocado = new VeiculoLocado(veiculo,
+//                            locacao,
+//                            diasLocado);
+//                    listaVeiculosLocado.add(veiculoLocado);
+//                    valorTotalLocacao.add((veiculo.getTipo().getValorDiaria().
+//                            multiply(new BigDecimal(diasLocado))));
+//                }
+//                // Variavél global Cliente
+//                locacao.setCliente(cliente);
+//                locacao.setData(this.jCalendarData.getDate());
+//                locacao.setVeiculosLocado(listaVeiculosLocado);
+//                try {
+//                    locacaoDAO.inserir(locacao);
+//                    this.mensagem.mInformacao("Total da Locação: R$ " + valorTotalLocacao);
+                this.resetCampos();
+//                } catch (Exception e) {
+//                    this.mensagem.mErro(e.getMessage());
+//                }
+            }
+        }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed

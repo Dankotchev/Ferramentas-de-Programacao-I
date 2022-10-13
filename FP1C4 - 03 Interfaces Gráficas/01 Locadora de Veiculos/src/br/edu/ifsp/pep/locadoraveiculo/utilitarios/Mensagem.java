@@ -19,6 +19,10 @@ public class Mensagem {
     public void mCorreto(String mensagem) {
         JOptionPane.showMessageDialog(null, mensagem);
     }
+    
+    public void mInformacao(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem, "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public boolean mSimNao(String mensagem) {
         boolean retorno = true;
