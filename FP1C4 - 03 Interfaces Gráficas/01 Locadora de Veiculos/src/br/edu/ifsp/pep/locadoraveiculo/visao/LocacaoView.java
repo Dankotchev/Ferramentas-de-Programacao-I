@@ -343,7 +343,9 @@ public class LocacaoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.resetCampos();
+        if (this.mensagem.mConfimarCancelar("Confimar?")) {
+            this.resetCampos();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
