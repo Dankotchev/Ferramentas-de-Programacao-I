@@ -25,6 +25,7 @@ public class LocacaoView extends javax.swing.JDialog {
     private void atualizarComboBoxVeiculos() {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboVeiculos.getModel();
         modelo.addAll(veiculoDAO.buscarVeiculosDisponiveisParaLocacao());
+        this.comboVeiculos.setSelectedIndex(-1);
     }
 
     private void setDataAtual() {
@@ -41,6 +42,15 @@ public class LocacaoView extends javax.swing.JDialog {
                 veiculo.getTipo().getValorDiaria(), this.spinnerQtdDias.getValue()
             });
         }
+    }
+    
+    private void resetCampos(){
+        this.txtCliente.setText("");
+        this.setDataAtual();
+        this.comboVeiculos.setSelectedIndex(-1);
+        this.spinnerQtdDias.setValue(1);
+        this.listaVeiculos.removeAll(listaVeiculos);
+        this.atualizarTabelaResumoLocacao();
     }
 
     /**
@@ -62,7 +72,7 @@ public class LocacaoView extends javax.swing.JDialog {
         comboVeiculos = new javax.swing.JComboBox<>();
         spinnerQtdDias = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
-        txtNome2 = new javax.swing.JTextField();
+        txtCliente = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaResumoLocacao = new javax.swing.JTable();
         jCalendarData = new com.toedter.calendar.JDateChooser();
@@ -126,7 +136,7 @@ public class LocacaoView extends javax.swing.JDialog {
             }
         });
 
-        txtNome2.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        txtCliente.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
         tabelaResumoLocacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,6 +154,7 @@ public class LocacaoView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaResumoLocacao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabelaResumoLocacao);
         if (tabelaResumoLocacao.getColumnModel().getColumnCount() > 0) {
             tabelaResumoLocacao.getColumnModel().getColumn(0).setResizable(false);
@@ -184,7 +195,7 @@ public class LocacaoView extends javax.swing.JDialog {
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtNome2)))
+                        .addComponent(txtCliente)))
                 .addContainerGap())
         );
         painelDadosLayout.setVerticalGroup(
@@ -193,7 +204,7 @@ public class LocacaoView extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,12 +227,27 @@ public class LocacaoView extends javax.swing.JDialog {
 
         btnFinalizar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnExcluir.setText("Excluir Veículo");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelBotoesLayout = new javax.swing.GroupLayout(painelBotoes);
         painelBotoes.setLayout(painelBotoesLayout);
@@ -288,11 +314,24 @@ public class LocacaoView extends javax.swing.JDialog {
             } else {
                 this.listaVeiculos.add((Veiculo) this.comboVeiculos.getSelectedItem());
                 this.atualizarTabelaResumoLocacao();
+                this.comboVeiculos.setSelectedIndex(-1);
             }
         } else {
             this.mensagem.mAviso("Selecione um veículo para locar");
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.resetCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,6 +393,6 @@ public class LocacaoView extends javax.swing.JDialog {
     private javax.swing.JPanel painelTitulo;
     private javax.swing.JSpinner spinnerQtdDias;
     private javax.swing.JTable tabelaResumoLocacao;
-    private javax.swing.JTextField txtNome2;
+    private javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 }
