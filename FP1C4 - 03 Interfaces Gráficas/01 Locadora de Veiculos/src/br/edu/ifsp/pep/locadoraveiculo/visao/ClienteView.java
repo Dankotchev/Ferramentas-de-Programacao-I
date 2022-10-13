@@ -20,6 +20,9 @@ public class ClienteView extends javax.swing.JDialog {
     public ClienteView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setEstadoBotoes(true);
+        this.setEstadoCamposTexto(true);
+
     }
 
     private void atualizarTabela() {
@@ -35,6 +38,23 @@ public class ClienteView extends javax.swing.JDialog {
                 });
             }
         }
+    }
+
+    private void setEstadoBotoes(boolean estado) {
+        this.btnInserir.setVisible(estado);
+        this.btnGravar.setVisible(!estado);
+        this.btnCancelar.setVisible(!estado);
+        this.btnAlterar.setEnabled(estado);
+        this.btnExcluir.setEnabled(estado);
+        this.btnPesquisa.setEnabled(estado);
+        this.txtPesquisar.setEnabled(estado);
+    }
+
+    private void setEstadoCamposTexto(boolean estado) {
+        this.txtPesquisar.setEditable(estado);
+        this.txtNome.setEnabled(!estado);
+        this.txtCPF.setEnabled(!estado);
+        this.txtEndereco.setEnabled(!estado);
     }
 
     /**
@@ -338,7 +358,7 @@ public class ClienteView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-       this.listaClientes = clienteDAO.buscarPorNome(txtPesquisar.getText());
+        this.listaClientes = clienteDAO.buscarPorNome(txtPesquisar.getText());
         this.atualizarTabela();
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
@@ -500,16 +520,24 @@ public class ClienteView extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
