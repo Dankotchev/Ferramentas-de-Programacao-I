@@ -35,22 +35,22 @@ public class LocacaoView extends javax.swing.JDialog {
         labelVeiculo = new javax.swing.JLabel();
         labelQtdDias = new javax.swing.JLabel();
         labelDAta = new javax.swing.JLabel();
-        jCalendarData = new javax.swing.JTextField();
         comboVeiculos = new javax.swing.JComboBox<>();
         jSpinner1 = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         txtNome2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaResumoLocacao = new javax.swing.JTable();
+        jCalendarData = new com.toedter.calendar.JDateChooser();
         painelBotoes = new javax.swing.JPanel();
         btnFinalizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(854, 480));
-        setMinimumSize(new java.awt.Dimension(854, 480));
-        setPreferredSize(new java.awt.Dimension(854, 480));
+        setMaximumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         painelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -89,19 +89,12 @@ public class LocacaoView extends javax.swing.JDialog {
         labelDAta.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         labelDAta.setText("Data");
 
-        jCalendarData.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
-
         comboVeiculos.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
         jSpinner1.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
         btnAdicionar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnAdicionar.setText("Adicionar");
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
-            }
-        });
 
         txtNome2.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
@@ -129,31 +122,81 @@ public class LocacaoView extends javax.swing.JDialog {
             tabelaResumoLocacao.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jCalendarData.setDateFormatString("d '/' MM '/' y");
+        jCalendarData.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+
+        javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
+        painelDados.setLayout(painelDadosLayout);
+        painelDadosLayout.setHorizontalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelDAta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosLayout.createSequentialGroup()
+                                        .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jSpinner1))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosLayout.createSequentialGroup()
+                                        .addComponent(labelVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(comboVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAdicionar)))
+                        .addGap(0, 345, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNome2)))
+                .addContainerGap())
+        );
+        painelDadosLayout.setVerticalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelDAta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         painelBotoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnFinalizar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnFinalizar.setText("Finalizar");
-        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinalizarActionPerformed(evt);
-            }
-        });
 
         btnExcluir.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnExcluir.setText("Excluir Veículo");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
 
         btnCancelar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout painelBotoesLayout = new javax.swing.GroupLayout(painelBotoes);
         painelBotoes.setLayout(painelBotoesLayout);
@@ -177,71 +220,7 @@ public class LocacaoView extends javax.swing.JDialog {
                     .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
-        painelDados.setLayout(painelDadosLayout);
-        painelDadosLayout.setHorizontalGroup(
-            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCliente)
-                            .addGroup(painelDadosLayout.createSequentialGroup()
-                                .addComponent(labelDAta)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelDadosLayout.createSequentialGroup()
-                                .addComponent(labelQtdDias)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelDadosLayout.createSequentialGroup()
-                                .addComponent(labelVeiculo)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(btnAdicionar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelDadosLayout.createSequentialGroup()
-                    .addGap(80, 80, 80)
-                    .addComponent(txtNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(134, Short.MAX_VALUE)))
-        );
-        painelDadosLayout.setVerticalGroup(
-            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(labelCliente)
-                .addGap(26, 26, 26)
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDAta)
-                    .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelVeiculo)
-                    .addComponent(comboVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelQtdDias)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelDadosLayout.createSequentialGroup()
-                    .addGap(27, 27, 27)
-                    .addComponent(txtNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(264, Short.MAX_VALUE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -251,54 +230,26 @@ public class LocacaoView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addComponent(painelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        listaTiposVeiculos = tipoVeiculoDAO.procurarPorNome(this.txtNome.getText());
-        this.atualizarTabela();
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        this.setEstadoBotoes(false);
-        this.setEstadoCamposTextos(true);
-        this.txtNome.setRequestFocusEnabled(true);
-    }//GEN-LAST:event_btnFinalizarActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if (this.tabelaTipoVeiculo.getSelectedRow() >= 0) {
-            TipoVeiculo tipoVeiculoSelecionado = this.listaTiposVeiculos.get(this.tabelaTipoVeiculo.getSelectedRow());
-
-            try {
-                tipoVeiculoDAO.remover(tipoVeiculoSelecionado);
-                this.mensagem.mAviso("Tipo veículo selecionado foi excluido");
-                this.btnPesquisarActionPerformed(evt);
-            } catch (Exception e) {
-                this.mensagem.mAviso("Tipo de Veículo não pode ser removido.\nTipo Veículo  possui veículos relacionados");
-            }
-        } else {
-            this.mensagem.mAtencao("Selecione um tipo de Veículo");
-        }
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // Limpa o conteudo dos campos
-        this.resetCampos(evt);
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,7 +299,7 @@ public class LocacaoView extends javax.swing.JDialog {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JComboBox<String> comboVeiculos;
-    private javax.swing.JTextField jCalendarData;
+    private com.toedter.calendar.JDateChooser jCalendarData;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel labelCliente;
