@@ -134,7 +134,8 @@ public class Veiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "Tipo: " + tipo + " | Modelo: " + modelo + " | Ano: " + ano + " | Placa: " + placa;
+        return "Tipo: " + tipo + " | Modelo: " + modelo + " | Ano: " + ano + " | Placa: "
+                + placa + "| Valor Diária" + tipo.getValorDiaria();
     }
 
 }

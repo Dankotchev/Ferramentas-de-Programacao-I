@@ -1,27 +1,46 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
+import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class LocacaoView extends javax.swing.JDialog {
 
+    private final Mensagem mensagem = new Mensagem();
     private VeiculoDAO veiculoDAO = new VeiculoDAO();
-    
+    private List<Veiculo> listaVeiculos = new ArrayList<>();
+
     public LocacaoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.atualizarComboBoxVeiculos();
         this.setDataAtual();
     }
-    
-    private void atualizarComboBoxVeiculos(){
-         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboVeiculos.getModel();
-         modelo.addAll(veiculoDAO.buscarVeiculosDisponiveisParaLocacao());
+
+    private void atualizarComboBoxVeiculos() {
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboVeiculos.getModel();
+        modelo.addAll(veiculoDAO.buscarVeiculosDisponiveisParaLocacao());
     }
-    
-    private void setDataAtual(){
+
+    private void setDataAtual() {
         this.jCalendarData.setDate(new Date());
+    }
+
+    private void atualizarTabelaResumoLocacao() {
+        DefaultTableModel modelo = (DefaultTableModel) this.tabelaResumoLocacao.getModel();
+        modelo.setNumRows(0);
+
+        for (Veiculo veiculo : listaVeiculos) {
+            modelo.addRow(new Object[]{
+                veiculo.getModelo(), veiculo.getPlaca(),
+                veiculo.getTipo().getValorDiaria(), this.spinnerQtdDias.getValue()
+            });
+        }
     }
 
     /**
@@ -39,9 +58,9 @@ public class LocacaoView extends javax.swing.JDialog {
         labelCliente = new javax.swing.JLabel();
         labelVeiculo = new javax.swing.JLabel();
         labelQtdDias = new javax.swing.JLabel();
-        labelDAta = new javax.swing.JLabel();
+        labelData = new javax.swing.JLabel();
         comboVeiculos = new javax.swing.JComboBox<>();
-        jSpinner1 = new javax.swing.JSpinner();
+        spinnerQtdDias = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         txtNome2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -91,15 +110,21 @@ public class LocacaoView extends javax.swing.JDialog {
         labelQtdDias.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         labelQtdDias.setText("Qtd Dias");
 
-        labelDAta.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
-        labelDAta.setText("Data");
+        labelData.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        labelData.setText("Data");
 
         comboVeiculos.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
-        jSpinner1.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        spinnerQtdDias.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        spinnerQtdDias.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         btnAdicionar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         txtNome2.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
@@ -137,7 +162,7 @@ public class LocacaoView extends javax.swing.JDialog {
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
                     .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelDadosLayout.createSequentialGroup()
                             .addComponent(labelVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,13 +171,13 @@ public class LocacaoView extends javax.swing.JDialog {
                         .addGroup(painelDadosLayout.createSequentialGroup()
                             .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(painelDadosLayout.createSequentialGroup()
-                                    .addComponent(labelDAta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(painelDadosLayout.createSequentialGroup()
                                     .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spinnerQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(btnAdicionar)))
                             .addGap(0, 0, Short.MAX_VALUE)))
@@ -171,7 +196,7 @@ public class LocacaoView extends javax.swing.JDialog {
                     .addComponent(txtNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelDAta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -180,7 +205,7 @@ public class LocacaoView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
@@ -227,14 +252,13 @@ public class LocacaoView extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(painelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelBotoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,6 +274,25 @@ public class LocacaoView extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // Capturando o Veículo selecionado no combo box
+        Veiculo selecionado = (Veiculo) this.comboVeiculos.getSelectedItem();
+        
+        // Verificando se foi selecionado um Veículo, se for diferente de nulo
+        if (selecionado != null) {
+            
+            // Verificando se o Veículo selecionado já foi ou não inserido no resumo
+            if (this.listaVeiculos.contains(selecionado)) {
+                this.mensagem.mAtencao("Veículo já adicionado.\nEscolha outro veículo");
+            } else {
+                this.listaVeiculos.add((Veiculo) this.comboVeiculos.getSelectedItem());
+                this.atualizarTabelaResumoLocacao();
+            }
+        } else {
+            this.mensagem.mAviso("Selecione um veículo para locar");
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,15 +344,15 @@ public class LocacaoView extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboVeiculos;
     private com.toedter.calendar.JDateChooser jCalendarData;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel labelCliente;
-    private javax.swing.JLabel labelDAta;
+    private javax.swing.JLabel labelData;
     private javax.swing.JLabel labelLocacao;
     private javax.swing.JLabel labelQtdDias;
     private javax.swing.JLabel labelVeiculo;
     private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelDados;
     private javax.swing.JPanel painelTitulo;
+    private javax.swing.JSpinner spinnerQtdDias;
     private javax.swing.JTable tabelaResumoLocacao;
     private javax.swing.JTextField txtNome2;
     // End of variables declaration//GEN-END:variables
