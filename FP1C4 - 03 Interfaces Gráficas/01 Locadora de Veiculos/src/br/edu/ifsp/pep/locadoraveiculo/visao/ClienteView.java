@@ -1,10 +1,18 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
-/**
- *
- * @author daniloquirino
- */
+import br.edu.ifsp.pep.locadoraveiculo.dao.ClienteDAO;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Cliente;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
+import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class ClienteView extends javax.swing.JDialog {
+
+    private List<Cliente> listaClientes;
+    private Mensagem mensagem = new Mensagem();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
 
     /**
      * Creates new form ClienteView
@@ -12,6 +20,21 @@ public class ClienteView extends javax.swing.JDialog {
     public ClienteView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void atualizarTabela() {
+        if (this.listaClientes.isEmpty()) {
+            this.mensagem.mAviso("Não há Clientes cadastrados");
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) this.tabelaClientes.getModel();
+            modelo.setNumRows(0);
+
+            for (Cliente cliente : listaClientes) {
+                modelo.addRow(new Object[]{cliente.getId(), cliente.getNome(),
+                    "CPF Exemplo", "Endereço Exemplo"
+                });
+            }
+        }
     }
 
     /**
@@ -30,7 +53,7 @@ public class ClienteView extends javax.swing.JDialog {
         labelNomePesquisar = new javax.swing.JLabel();
         btnPesquisa = new javax.swing.JButton();
         txtPesquisar = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tabelaClientes = new javax.swing.JTable();
         tabCadastro = new javax.swing.JPanel();
         labelNome = new javax.swing.JLabel();
@@ -47,6 +70,7 @@ public class ClienteView extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Clientes");
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -105,16 +129,11 @@ public class ClienteView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaClientes.setColumnSelectionAllowed(true);
-        tabelaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        tabelaClientes.setSelectionMode();
-        jScrollPane1.setViewportView(tabelaClientes);
-        tabelaClientes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(tabelaClientes);
         if (tabelaClientes.getColumnModel().getColumnCount() > 0) {
             tabelaClientes.getColumnModel().getColumn(0).setResizable(false);
             tabelaClientes.getColumnModel().getColumn(1).setResizable(false);
-            tabelaClientes.getColumnModel().getColumn(2).setResizable(false);
-            tabelaClientes.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout tabPesquisarLayout = new javax.swing.GroupLayout(tabPesquisar);
@@ -124,13 +143,14 @@ public class ClienteView extends javax.swing.JDialog {
             .addGroup(tabPesquisarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tabPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(tabPesquisarLayout.createSequentialGroup()
                         .addComponent(labelNomePesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tabPesquisarLayout.setVerticalGroup(
@@ -142,7 +162,7 @@ public class ClienteView extends javax.swing.JDialog {
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -205,7 +225,7 @@ public class ClienteView extends javax.swing.JDialog {
                         .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         tabPainel.addTab("Cadastro", tabCadastro);
@@ -307,163 +327,163 @@ public class ClienteView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tabPainel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(painelBotoesPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-        listaVeiculos = veiculoDAO.buscarPorModelo(txtPesquisar.getText());
+       this.listaClientes = clienteDAO.buscarPorNome(txtPesquisar.getText());
         this.atualizarTabela();
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if (this.tabelaClientes.getSelectedRow() >= 0) {
-            this.veiculo = this.listaVeiculos.get(
-                this.tabelaClientes.getSelectedRow());
-
-            this.txtNome.setText(this.veiculo.getModelo());
-            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
-            this.txtCPF.setText(this.veiculo.getPlaca());
-            this.txtCidade.setText(this.veiculo.getCidade());
-            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
-
-            this.setEstadoBotoes(false);
-            this.tabPainel.setSelectedIndex(1);
-        }
+//        if (this.tabelaClientes.getSelectedRow() >= 0) {
+//            this.veiculo = this.listaVeiculos.get(
+//                    this.tabelaClientes.getSelectedRow());
+//
+//            this.txtNome.setText(this.veiculo.getModelo());
+//            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
+//            this.txtCPF.setText(this.veiculo.getPlaca());
+//            this.txtCidade.setText(this.veiculo.getCidade());
+//            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
+//
+//            this.setEstadoBotoes(false);
+//            this.tabPainel.setSelectedIndex(1);
+//        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        this.limparCampos();
-        this.tabPainel.setSelectedIndex(1);
-        this.txtNome.requestFocus();
+//        this.limparCampos();
+//        this.tabPainel.setSelectedIndex(1);
+//        this.txtNome.requestFocus();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if (this.tabelaClientes.getSelectedRow() >= 0) {
-            this.veiculo = this.listaVeiculos.get(
-                this.tabelaClientes.getSelectedRow());
-
-            this.txtNome.setText(this.veiculo.getModelo());
-            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
-            this.txtCPF.setText(this.veiculo.getPlaca());
-            this.txtCidade.setText(this.veiculo.getCidade());
-            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
-
-            this.setEstadoBotoes(false);
-            this.setEstadoCamposTexto(false);
-            this.btnGravar.setText("Excluir");
-            this.tabPainel.setSelectedIndex(1);
-        }
+//        if (this.tabelaClientes.getSelectedRow() >= 0) {
+//            this.veiculo = this.listaVeiculos.get(
+//                    this.tabelaClientes.getSelectedRow());
+//
+//            this.txtNome.setText(this.veiculo.getModelo());
+//            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
+//            this.txtCPF.setText(this.veiculo.getPlaca());
+//            this.txtCidade.setText(this.veiculo.getCidade());
+//            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
+//
+//            this.setEstadoBotoes(false);
+//            this.setEstadoCamposTexto(false);
+//            this.btnGravar.setText("Excluir");
+//            this.tabPainel.setSelectedIndex(1);
+//        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        String mensagem = "Veículo cadastrado";
-        boolean tudoOK = true;
-        int anoInformado = 0;
-
-        if (this.txtNome.getText().isEmpty()) {
-            this.mensagem.mAtencao("Modelo não informado");
-            this.txtNome.requestFocus();
-            tudoOK = false;
-        }
-
-        if (this.txtCPF.getText().isEmpty()) {
-            this.mensagem.mAtencao("Placa não informado");
-            this.txtCPF.requestFocus();
-            tudoOK = false;
-        }
-
-        try {
-            anoInformado = Integer.parseInt(this.txtEndereco.getText());
-
-        } catch (NumberFormatException nfe) {
-            this.mensagem.mErro("Formato inválido. Informe um valor numérico");
-            this.txtEndereco.requestFocus();
-            tudoOK = false;
-        }
-
-        if ((anoInformado < 1900) || (anoInformado > (new Date().getYear() + 1900))) {
-            this.mensagem.mAviso("Ano informado inválido");
-            this.txtEndereco.requestFocus();
-            tudoOK = false;
-        }
-
-        if (this.txtCidade.getText()
-            .isEmpty()) {
-            this.mensagem.mAtencao("Infome uma Cidade");
-            this.txtCidade.requestFocus();
-            tudoOK = false;
-        }
-
-        if (this.comboTipoVeiculo.getSelectedIndex() < 0) {
-            this.mensagem.mAtencao("Selecione um Tipo de Veículo");
-            tudoOK = false;
-        }
-
-        if (tudoOK) {
-            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
-
-            // Verifica se está realizando uma exclusão, comparando o texto do botão
-            if (this.btnGravar.getText().equals("Excluir")) {
-                mensagem = "Veículo excluído";
-                try {
-                    veiculoDAO.remover(veiculo);
-                    this.mensagem.mCorreto(mensagem);
-                    this.limparCampos();
-                } catch (Exception e) {
-                    this.mensagem.mErro(e.getMessage());
-                } finally {
-                    this.veiculo = null;
-                }
-
-                // Se o texto não foi alterado, é uma inserção ou alteração
-            } else {
-                // Realizando uma inserção
-                if (this.veiculo == null) {
-                    this.veiculo = new Veiculo(
-                        this.txtCPF.getText(),
-                        this.txtCidade.getText(),
-                        this.txtNome.getText(),
-                        anoInformado,
-                        this.listaTiposVeiculos.get(
-                            this.comboTipoVeiculo.getSelectedIndex()));
-                } else {
-                    // Realizando uma alteração
-                    this.veiculo.setPlaca(this.txtCPF.getText());
-                    this.veiculo.setCidade(this.txtCidade.getText());
-                    this.veiculo.setModelo(this.txtNome.getText());
-                    this.veiculo.setAno(anoInformado);
-                    this.veiculo.setTipo(this.listaTiposVeiculos.get(
-                        this.comboTipoVeiculo.getSelectedIndex()));
-                mensagem = "Veículo alterado";
-            }
-
-            // Propagando no banco a alteração ou inserção
-            try {
-                veiculoDAO.alterar(this.veiculo);
-                this.mensagem.mCorreto(mensagem);
-                this.limparCampos();
-                this.setEstadoBotoes(true);
-
-            } catch (Exception e) {
-                this.mensagem.mErro(e.getMessage());
-            } finally {
-                this.veiculo = null;
-            }
-        }
-        }
+//        String mensagem = "Veículo cadastrado";
+//        boolean tudoOK = true;
+//        int anoInformado = 0;
+//
+//        if (this.txtNome.getText().isEmpty()) {
+//            this.mensagem.mAtencao("Modelo não informado");
+//            this.txtNome.requestFocus();
+//            tudoOK = false;
+//        }
+//
+//        if (this.txtCPF.getText().isEmpty()) {
+//            this.mensagem.mAtencao("Placa não informado");
+//            this.txtCPF.requestFocus();
+//            tudoOK = false;
+//        }
+//
+//        try {
+//            anoInformado = Integer.parseInt(this.txtEndereco.getText());
+//
+//        } catch (NumberFormatException nfe) {
+//            this.mensagem.mErro("Formato inválido. Informe um valor numérico");
+//            this.txtEndereco.requestFocus();
+//            tudoOK = false;
+//        }
+//
+//        if ((anoInformado < 1900) || (anoInformado > (new Date().getYear() + 1900))) {
+//            this.mensagem.mAviso("Ano informado inválido");
+//            this.txtEndereco.requestFocus();
+//            tudoOK = false;
+//        }
+//
+//        if (this.txtCidade.getText()
+//                .isEmpty()) {
+//            this.mensagem.mAtencao("Infome uma Cidade");
+//            this.txtCidade.requestFocus();
+//            tudoOK = false;
+//        }
+//
+//        if (this.comboTipoVeiculo.getSelectedIndex() < 0) {
+//            this.mensagem.mAtencao("Selecione um Tipo de Veículo");
+//            tudoOK = false;
+//        }
+//
+//        if (tudoOK) {
+//            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
+//
+//            // Verifica se está realizando uma exclusão, comparando o texto do botão
+//            if (this.btnGravar.getText().equals("Excluir")) {
+//                mensagem = "Veículo excluído";
+//                try {
+//                    veiculoDAO.remover(veiculo);
+//                    this.mensagem.mCorreto(mensagem);
+//                    this.limparCampos();
+//                } catch (Exception e) {
+//                    this.mensagem.mErro(e.getMessage());
+//                } finally {
+//                    this.veiculo = null;
+//                }
+//
+//                // Se o texto não foi alterado, é uma inserção ou alteração
+//            } else {
+//                // Realizando uma inserção
+//                if (this.veiculo == null) {
+//                    this.veiculo = new Veiculo(
+//                            this.txtCPF.getText(),
+//                            this.txtCidade.getText(),
+//                            this.txtNome.getText(),
+//                            anoInformado,
+//                            this.listaTiposVeiculos.get(
+//                                    this.comboTipoVeiculo.getSelectedIndex()));
+//                } else {
+//                    // Realizando uma alteração
+//                    this.veiculo.setPlaca(this.txtCPF.getText());
+//                    this.veiculo.setCidade(this.txtCidade.getText());
+//                    this.veiculo.setModelo(this.txtNome.getText());
+//                    this.veiculo.setAno(anoInformado);
+//                    this.veiculo.setTipo(this.listaTiposVeiculos.get(
+//                            this.comboTipoVeiculo.getSelectedIndex()));
+//                    mensagem = "Veículo alterado";
+//                }
+//
+//                // Propagando no banco a alteração ou inserção
+//                try {
+//                    veiculoDAO.alterar(this.veiculo);
+//                    this.mensagem.mCorreto(mensagem);
+//                    this.limparCampos();
+//                    this.setEstadoBotoes(true);
+//
+//                } catch (Exception e) {
+//                    this.mensagem.mErro(e.getMessage());
+//                } finally {
+//                    this.veiculo = null;
+//                }
+//            }
+//        }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setEstadoBotoes(true);
-        this.tabPainel.setSelectedIndex(0);
-        this.limparCampos();
+//        this.setEstadoBotoes(true);
+//        this.tabPainel.setSelectedIndex(0);
+//        this.limparCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -515,7 +535,7 @@ public class ClienteView extends javax.swing.JDialog {
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnPesquisa;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelEndereco;
     private javax.swing.JLabel labelNome;
