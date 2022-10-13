@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class LocacaoView extends javax.swing.JDialog {
@@ -43,8 +44,8 @@ public class LocacaoView extends javax.swing.JDialog {
             });
         }
     }
-    
-    private void resetCampos(){
+
+    private void resetCampos() {
         this.txtCliente.setText("");
         this.setDataAtual();
         this.comboVeiculos.setSelectedIndex(-1);
@@ -84,7 +85,6 @@ public class LocacaoView extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         painelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -174,24 +174,23 @@ public class LocacaoView extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
-                    .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(painelDadosLayout.createSequentialGroup()
-                            .addComponent(labelVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(comboVeiculos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(painelDadosLayout.createSequentialGroup()
-                            .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(painelDadosLayout.createSequentialGroup()
-                                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(painelDadosLayout.createSequentialGroup()
-                                    .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(spinnerQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnAdicionar)))
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboVeiculos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spinnerQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAdicionar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -304,10 +303,10 @@ public class LocacaoView extends javax.swing.JDialog {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // Capturando o Veículo selecionado no combo box
         Veiculo selecionado = (Veiculo) this.comboVeiculos.getSelectedItem();
-        
+
         // Verificando se foi selecionado um Veículo, se for diferente de nulo
         if (selecionado != null) {
-            
+
             // Verificando se o Veículo selecionado já foi ou não inserido no resumo
             if (this.listaVeiculos.contains(selecionado)) {
                 this.mensagem.mAtencao("Veículo já adicionado.\nEscolha outro veículo");
@@ -326,7 +325,21 @@ public class LocacaoView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        // Capturando o Veículo selecionado no combo box
+        Veiculo selecionado = this.listaVeiculos.
+                get(this.tabelaResumoLocacao.getSelectedRow());
+
+        // Verificando se foi selecionado um Veículo, se for diferente de nulo
+        if (selecionado != null) {
+            // Se confirmar a exclusão, remove da lista
+            if (this.mensagem.mSimNao("Confimar exclsão?")) {
+                this.listaVeiculos.remove(selecionado);
+                this.atualizarTabelaResumoLocacao();
+                this.comboVeiculos.setSelectedIndex(-1);
+            }
+        } else {
+            this.mensagem.mAviso("Selecione um veículo para excluir");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
