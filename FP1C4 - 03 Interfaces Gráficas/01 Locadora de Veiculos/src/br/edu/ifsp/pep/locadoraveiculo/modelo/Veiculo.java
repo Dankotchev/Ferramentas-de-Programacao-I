@@ -115,8 +115,8 @@ public class Veiculo implements Serializable {
     public void setTipo(TipoVeiculo tipo) {
         this.tipo = tipo;
     }
-    
-    public String getLocado(){
+
+    public String getLocado() {
         String estado = "Não";
         if (this.locado) {
             estado = "Sim";
@@ -134,7 +134,7 @@ public class Veiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "Veiculo{" + "id=" + id + ", placa=" + placa + ", cidade=" + cidade + ", modelo=" + modelo + ", ano=" + ano + ", locado=" + locado + ", tipo=" + tipo + '}';
+        return "Tipo: " + tipo + " | Modelo: " + modelo + " | Ano: " + ano + " | Placa: " + placa;
     }
 
 }
