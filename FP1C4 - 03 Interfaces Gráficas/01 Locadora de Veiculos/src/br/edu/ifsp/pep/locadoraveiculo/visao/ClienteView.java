@@ -2,9 +2,7 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.ClienteDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Cliente;
-import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
 import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
-import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -65,9 +63,18 @@ public class ClienteView extends javax.swing.JDialog {
     }
 
     private void setCamposCliente(Cliente cliente) {
-        this.txtNome.setText(this.cliente.getNome());
+        this.txtNome.setText(cliente.getNome());
         this.txtEndereco.setText("Endereço Exemplo");
         this.txtCPF.setText("09812345690");
+    }
+
+    private void aposGravar(String mensagem,java.awt.event.ActionEvent evt) {
+        this.mensagem.mCorreto(mensagem);
+        this.limparCampos();
+        this.setEstadoBotoes(true);
+        this.setEstadoCamposTexto(false);
+        this.tabPainel.setSelectedIndex(0);
+        this.btnPesquisaActionPerformed(evt);
     }
 
     /**
@@ -383,7 +390,7 @@ public class ClienteView extends javax.swing.JDialog {
             this.setEstadoCamposTexto(true);
             this.setEstadoBotoes(false);
             this.tabPainel.setSelectedIndex(1);
-        }else{
+        } else {
             this.mensagem.mAtencao("Nenhum Cliente selecionado");
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -411,101 +418,70 @@ public class ClienteView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-//        String mensagem = "Veículo cadastrado";
-//        boolean tudoOK = true;
-//        int anoInformado = 0;
-//
-//        if (this.txtNome.getText().isEmpty()) {
-//            this.mensagem.mAtencao("Modelo não informado");
-//            this.txtNome.requestFocus();
-//            tudoOK = false;
-//        }
-//
-//        if (this.txtCPF.getText().isEmpty()) {
-//            this.mensagem.mAtencao("Placa não informado");
-//            this.txtCPF.requestFocus();
-//            tudoOK = false;
-//        }
-//
-//        try {
-//            anoInformado = Integer.parseInt(this.txtEndereco.getText());
-//
-//        } catch (NumberFormatException nfe) {
-//            this.mensagem.mErro("Formato inválido. Informe um valor numérico");
-//            this.txtEndereco.requestFocus();
-//            tudoOK = false;
-//        }
-//
-//        if ((anoInformado < 1900) || (anoInformado > (new Date().getYear() + 1900))) {
-//            this.mensagem.mAviso("Ano informado inválido");
-//            this.txtEndereco.requestFocus();
-//            tudoOK = false;
-//        }
-//
-//        if (this.txtCidade.getText()
-//                .isEmpty()) {
-//            this.mensagem.mAtencao("Infome uma Cidade");
-//            this.txtCidade.requestFocus();
-//            tudoOK = false;
-//        }
-//
-//        if (this.comboTipoVeiculo.getSelectedIndex() < 0) {
-//            this.mensagem.mAtencao("Selecione um Tipo de Veículo");
-//            tudoOK = false;
-//        }
-//
-//        if (tudoOK) {
-//            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
-//
-//            // Verifica se está realizando uma exclusão, comparando o texto do botão
-//            if (this.btnGravar.getText().equals("Excluir")) {
-//                mensagem = "Veículo excluído";
-//                try {
-//                    veiculoDAO.remover(veiculo);
-//                    this.mensagem.mCorreto(mensagem);
-//                    this.limparCampos();
-//                } catch (Exception e) {
-//                    this.mensagem.mErro(e.getMessage());
-//                } finally {
-//                    this.veiculo = null;
-//                }
-//
-//                // Se o texto não foi alterado, é uma inserção ou alteração
-//            } else {
-//                // Realizando uma inserção
-//                if (this.veiculo == null) {
-//                    this.veiculo = new Veiculo(
-//                            this.txtCPF.getText(),
-//                            this.txtCidade.getText(),
-//                            this.txtNome.getText(),
-//                            anoInformado,
-//                            this.listaTiposVeiculos.get(
-//                                    this.comboTipoVeiculo.getSelectedIndex()));
-//                } else {
-//                    // Realizando uma alteração
-//                    this.veiculo.setPlaca(this.txtCPF.getText());
-//                    this.veiculo.setCidade(this.txtCidade.getText());
-//                    this.veiculo.setModelo(this.txtNome.getText());
-//                    this.veiculo.setAno(anoInformado);
-//                    this.veiculo.setTipo(this.listaTiposVeiculos.get(
-//                            this.comboTipoVeiculo.getSelectedIndex()));
-//                    mensagem = "Veículo alterado";
-//                }
-//
-//                // Propagando no banco a alteração ou inserção
-//                try {
-//                    veiculoDAO.alterar(this.veiculo);
-//                    this.mensagem.mCorreto(mensagem);
-//                    this.limparCampos();
-//                    this.setEstadoBotoes(true);
-//
-//                } catch (Exception e) {
-//                    this.mensagem.mErro(e.getMessage());
-//                } finally {
-//                    this.veiculo = null;
-//                }
-//            }
-//        }
+        String mensagem = "Cliente cadastrado";
+        boolean tudoOK = true;
+
+        if (this.txtNome.getText().isEmpty()) {
+            this.mensagem.mAtencao("Nome não informado");
+            this.txtNome.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtCPF.getText().isEmpty()) {
+            this.mensagem.mAtencao("CPF não informado");
+            this.txtCPF.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtEndereco.getText().isEmpty()) {
+            this.mensagem.mAtencao("Endereço não informado");
+            this.txtEndereco.requestFocus();
+            tudoOK = false;
+        }
+
+        if (tudoOK) {
+            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
+
+            // Verifica se está realizando uma exclusão, comparando o texto do botão
+            if (this.btnGravar.getText().equals("Excluir")) {
+                mensagem = "Cliente excluído";
+                try {
+                    clienteDAO.remover(cliente);
+                    this.aposGravar(mensagem, evt);
+                } catch (Exception e) {
+                    this.mensagem.mErro(e.getMessage());
+                } finally {
+                    this.cliente = null;
+                }
+
+                // Se o texto não foi alterado, é uma inserção ou alteração
+            } else {
+                // Realizando uma inserção
+                if (this.cliente == null) {
+                    this.cliente = new Cliente(
+                            this.txtNome.getText());
+                    //                            this.txtCPF.getText(),
+                    //                            this.txtEndereco.getText(),
+
+                } else {
+                    // Realizando uma alteração
+                    this.cliente.setNome(this.txtNome.getText());
+//                    this.cliente.setCPF(this.txtCPF.getText());
+//                    this.cliente.setEndereco(this.txtEndereco.getText());
+                    mensagem = "Cliente alterado";
+                }
+
+                // Propagando no banco a alteração ou inserção
+                try {
+                    clienteDAO.alterar(this.cliente);
+                    this.aposGravar(mensagem, evt);
+                } catch (Exception e) {
+                    this.mensagem.mErro(e.getMessage());
+                } finally {
+                    this.cliente = null;
+                }
+            }
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
