@@ -56,12 +56,18 @@ public class ClienteView extends javax.swing.JDialog {
         this.txtCPF.setEnabled(estado);
         this.txtEndereco.setEnabled(estado);
     }
-    
-    private void limparCampos(){
+
+    private void limparCampos() {
         this.txtPesquisar.setText("");
         this.txtNome.setText("");
         this.txtCPF.setText("");
         this.txtEndereco.setText("");
+    }
+
+    private void setCamposCliente(Cliente cliente) {
+        this.txtNome.setText(this.cliente.getNome());
+        this.txtEndereco.setText("Endereço Exemplo");
+        this.txtCPF.setText("09812345690");
     }
 
     /**
@@ -370,19 +376,16 @@ public class ClienteView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-//        if (this.tabelaClientes.getSelectedRow() >= 0) {
-//            this.veiculo = this.listaVeiculos.get(
-//                    this.tabelaClientes.getSelectedRow());
-//
-//            this.txtNome.setText(this.veiculo.getModelo());
-//            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
-//            this.txtCPF.setText(this.veiculo.getPlaca());
-//            this.txtCidade.setText(this.veiculo.getCidade());
-//            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
-//
-//            this.setEstadoBotoes(false);
-//            this.tabPainel.setSelectedIndex(1);
-//        }
+        if (this.tabelaClientes.getSelectedRow() >= 0) {
+            this.cliente = this.listaClientes.get(
+                    this.tabelaClientes.getSelectedRow());
+            this.setCamposCliente(cliente);
+            this.setEstadoCamposTexto(true);
+            this.setEstadoBotoes(false);
+            this.tabPainel.setSelectedIndex(1);
+        }else{
+            this.mensagem.mAtencao("Nenhum Cliente selecionado");
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -397,17 +400,12 @@ public class ClienteView extends javax.swing.JDialog {
         if (this.tabelaClientes.getSelectedRow() >= 0) {
             this.cliente = this.listaClientes.get(
                     this.tabelaClientes.getSelectedRow());
-
-            this.txtNome.setText(this.cliente.getNome());
-            this.txtEndereco.setText("Endereço Exemplo");
-            this.txtCPF.setText("09812345690");
-
-
+            this.setCamposCliente(cliente);
             this.setEstadoBotoes(false);
             this.setEstadoCamposTexto(false);
             this.btnGravar.setText("Excluir");
             this.tabPainel.setSelectedIndex(1);
-        }else{
+        } else {
             this.mensagem.mAtencao("Nenhum Cliente selecionado");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
