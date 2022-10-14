@@ -12,6 +12,7 @@ public class ClienteView extends javax.swing.JDialog {
 
     private List<Cliente> listaClientes;
     private Mensagem mensagem = new Mensagem();
+    private Cliente cliente;
     private final ClienteDAO clienteDAO = new ClienteDAO();
 
     /**
@@ -21,7 +22,7 @@ public class ClienteView extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setEstadoBotoes(true);
-        this.setEstadoCamposTexto(true);
+        this.setEstadoCamposTexto(false);
 
     }
 
@@ -44,17 +45,23 @@ public class ClienteView extends javax.swing.JDialog {
         this.btnInserir.setVisible(estado);
         this.btnGravar.setVisible(!estado);
         this.btnCancelar.setVisible(!estado);
-        this.btnAlterar.setEnabled(estado);
-        this.btnExcluir.setEnabled(estado);
-        this.btnPesquisa.setEnabled(estado);
-        this.txtPesquisar.setEnabled(estado);
+        this.btnAlterar.setVisible(estado);
+        this.btnExcluir.setVisible(estado);
+        this.btnPesquisa.setVisible(estado);
     }
 
     private void setEstadoCamposTexto(boolean estado) {
-        this.txtPesquisar.setEditable(estado);
-        this.txtNome.setEnabled(!estado);
-        this.txtCPF.setEnabled(!estado);
-        this.txtEndereco.setEnabled(!estado);
+        this.txtPesquisar.setEnabled(!estado);
+        this.txtNome.setEnabled(estado);
+        this.txtCPF.setEnabled(estado);
+        this.txtEndereco.setEnabled(estado);
+    }
+    
+    private void limparCampos(){
+        this.txtPesquisar.setText("");
+        this.txtNome.setText("");
+        this.txtCPF.setText("");
+        this.txtEndereco.setText("");
     }
 
     /**
@@ -379,27 +386,30 @@ public class ClienteView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-//        this.limparCampos();
-//        this.tabPainel.setSelectedIndex(1);
-//        this.txtNome.requestFocus();
+        this.limparCampos();
+        this.tabPainel.setSelectedIndex(1);
+        this.txtNome.requestFocus();
+        this.setEstadoBotoes(false);
+        this.setEstadoCamposTexto(true);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-//        if (this.tabelaClientes.getSelectedRow() >= 0) {
-//            this.veiculo = this.listaVeiculos.get(
-//                    this.tabelaClientes.getSelectedRow());
-//
-//            this.txtNome.setText(this.veiculo.getModelo());
-//            this.txtEndereco.setText(String.valueOf(this.veiculo.getAno()));
-//            this.txtCPF.setText(this.veiculo.getPlaca());
-//            this.txtCidade.setText(this.veiculo.getCidade());
-//            this.comboTipoVeiculo.setSelectedItem(this.veiculo.getTipo().getNome());
-//
-//            this.setEstadoBotoes(false);
-//            this.setEstadoCamposTexto(false);
-//            this.btnGravar.setText("Excluir");
-//            this.tabPainel.setSelectedIndex(1);
-//        }
+        if (this.tabelaClientes.getSelectedRow() >= 0) {
+            this.cliente = this.listaClientes.get(
+                    this.tabelaClientes.getSelectedRow());
+
+            this.txtNome.setText(this.cliente.getNome());
+            this.txtEndereco.setText("Endereço Exemplo");
+            this.txtCPF.setText("09812345690");
+
+
+            this.setEstadoBotoes(false);
+            this.setEstadoCamposTexto(false);
+            this.btnGravar.setText("Excluir");
+            this.tabPainel.setSelectedIndex(1);
+        }else{
+            this.mensagem.mAtencao("Nenhum Cliente selecionado");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
@@ -501,9 +511,10 @@ public class ClienteView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-//        this.setEstadoBotoes(true);
-//        this.tabPainel.setSelectedIndex(0);
-//        this.limparCampos();
+        this.setEstadoBotoes(true);
+        this.setEstadoCamposTexto(false);
+        this.tabPainel.setSelectedIndex(0);
+        this.limparCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
