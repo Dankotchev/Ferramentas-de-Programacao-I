@@ -1,24 +1,32 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
+import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
+import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
+import br.edu.ifsp.pep.utilitarios.Mensagem;
+import br.edu.ifsp.pep.utilitarios.Relatorio;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 public class RelatorioVeiculoView extends javax.swing.JDialog {
 
-    /**
-     * Creates new form RelatorioVeiculoView
-     */
+    private List<TipoVeiculo> listaTiposVeiculos;
+
     public RelatorioVeiculoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.atualizarComboBoxTipoVeiculo();
         this.setLocationRelativeTo(null);
     }
-    
-        private void atualizarComboBoxTipoVeiculo() {
+
+    private void atualizarComboBoxTipoVeiculo() {
+        TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
         this.listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboBoxTipoVeiculo.getModel();
+        modelo.addElement("");
         for (TipoVeiculo tipo : this.listaTiposVeiculos) {
-            modelo.addElement(tipo.getNome());
+            modelo.addElement(tipo);
         }
     }
 
@@ -145,7 +153,32 @@ public class RelatorioVeiculoView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
-        // TODO add your handling code here:
+        String fileXML = "relatorio_veiculos.jrxml";
+        int opcaoComboBox = this.comboBoxTipoVeiculo.getSelectedIndex();
+        String textoModelo = this.txtModelo.getText();
+        VeiculoDAO veiculoDAO = new VeiculoDAO();
+
+        if (opcaoComboBox != 0) {
+            TipoVeiculo tipoVeiculo = (TipoVeiculo) this.comboBoxTipoVeiculo.getSelectedItem();
+            if (textoModelo.equals("")) {
+                
+                // Pesquisar apenas por TIPO VEÍCULO
+                Relatorio.gerarFromXML(fileXML,
+                        veiculoDAO.buscarPorTipoVeiculo(tipoVeiculo.getId()));
+            } else {
+                // Pesquisar por TIPO VEÍCULO E MODELO
+                Relatorio.gerarFromXML(fileXML,
+                        veiculoDAO.buscarPorModeloETipoVeiculo(textoModelo, tipoVeiculo.getId()));
+            }
+        } else {
+            if (!(textoModelo.equals(""))) {
+                // Pesquisar por apenas por MODELO
+                Relatorio.gerarFromXML(fileXML,
+                        veiculoDAO.buscarPorModelo(textoModelo));
+            } else{
+                Mensagem.mAviso("Escolha um Tipo de Veículo e/ou informe um Modelo");
+            }
+        }
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**

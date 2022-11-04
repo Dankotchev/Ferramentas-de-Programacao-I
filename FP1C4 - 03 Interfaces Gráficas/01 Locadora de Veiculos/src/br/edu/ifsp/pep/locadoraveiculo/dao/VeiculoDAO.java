@@ -23,6 +23,21 @@ public class VeiculoDAO extends AbstractDAO<Veiculo> {
                 .setParameter("modelo", "%" + modelo + "%")
                 .getResultList();
     }
+    
+    public List<Veiculo> buscarPorTipoVeiculo(long tipo) {
+        return getEntityManager()
+                .createNamedQuery("Veiculo.buscarPorTipoVeiculo", Veiculo.class)
+                .setParameter("tipo", tipo)
+                .getResultList();
+    }
+    
+    public List<Veiculo> buscarPorModeloETipoVeiculo(String modelo, long tipo){
+        return getEntityManager()
+                .createNamedQuery("Veiculo.buscarPorModeloETipoVeiculo", Veiculo.class)
+                .setParameter("modelo", "%" + modelo + "%")
+                .setParameter("tipo", tipo)
+                .getResultList();
+    }
 
     @Override
     public void inserir(Veiculo veiculo) throws Exception {
@@ -48,5 +63,5 @@ public class VeiculoDAO extends AbstractDAO<Veiculo> {
         em.getTransaction().commit();
         em.close();
     }
-
+    
 }

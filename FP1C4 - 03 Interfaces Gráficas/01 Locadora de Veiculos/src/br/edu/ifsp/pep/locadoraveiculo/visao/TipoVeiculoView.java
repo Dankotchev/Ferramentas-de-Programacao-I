@@ -2,7 +2,7 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
-import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import br.edu.ifsp.pep.utilitarios.Mensagem;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;

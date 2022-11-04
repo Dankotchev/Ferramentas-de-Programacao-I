@@ -27,7 +27,11 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name = "Veiculo.buscarPorPlacaECidade",
             query = "SELECT v FROM Veiculo v WHERE v.cidade = :cidade AND v.placa = :placa"),
     @NamedQuery(name = "Veiclo.buscarPorModelo",
-            query = "SELECT v FROM Veiculo v WHERE v.modelo LIKE :modelo")
+            query = "SELECT v FROM Veiculo v WHERE v.modelo LIKE :modelo"),
+    @NamedQuery(name = "Veiculo.buscarPorTipoVeiculo",
+            query = "SELECT v FROM Veiculo v WHERE v.tipo.id = :tipo"),
+    @NamedQuery(name = "Veiculo.buscarPorModeloETipoVeiculo",
+            query = "SELECT v FROM Veiculo v WHERE v.modelo LIKE :modelo AND v.tipo.id = :tipo")
 })
 public class Veiculo implements Serializable {
 
