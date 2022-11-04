@@ -3,15 +3,12 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
-import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
 import br.edu.ifsp.pep.utilitarios.Mensagem;
 import br.edu.ifsp.pep.utilitarios.Relatorio;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 public class RelatorioVeiculoView extends javax.swing.JDialog {
-
-    private List<TipoVeiculo> listaTiposVeiculos;
 
     public RelatorioVeiculoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -22,10 +19,10 @@ public class RelatorioVeiculoView extends javax.swing.JDialog {
 
     private void atualizarComboBoxTipoVeiculo() {
         TipoVeiculoDAO tipoVeiculoDAO = new TipoVeiculoDAO();
-        this.listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
+        List<TipoVeiculo> listaTiposVeiculos = tipoVeiculoDAO.retonarTodos();
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboBoxTipoVeiculo.getModel();
         modelo.addElement("");
-        for (TipoVeiculo tipo : this.listaTiposVeiculos) {
+        for (TipoVeiculo tipo : listaTiposVeiculos) {
             modelo.addElement(tipo);
         }
     }
@@ -153,7 +150,7 @@ public class RelatorioVeiculoView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
-        String fileXML = "relatorio_veiculos.jrxml";
+        String fileXML = "RelatorioVeiculo.jrxml";
         int opcaoComboBox = this.comboBoxTipoVeiculo.getSelectedIndex();
         String textoModelo = this.txtModelo.getText();
         VeiculoDAO veiculoDAO = new VeiculoDAO();
@@ -161,7 +158,7 @@ public class RelatorioVeiculoView extends javax.swing.JDialog {
         if (opcaoComboBox != 0) {
             TipoVeiculo tipoVeiculo = (TipoVeiculo) this.comboBoxTipoVeiculo.getSelectedItem();
             if (textoModelo.equals("")) {
-                
+
                 // Pesquisar apenas por TIPO VEÍCULO
                 Relatorio.gerarFromXML(fileXML,
                         veiculoDAO.buscarPorTipoVeiculo(tipoVeiculo.getId()));
@@ -175,7 +172,7 @@ public class RelatorioVeiculoView extends javax.swing.JDialog {
                 // Pesquisar por apenas por MODELO
                 Relatorio.gerarFromXML(fileXML,
                         veiculoDAO.buscarPorModelo(textoModelo));
-            } else{
+            } else {
                 Mensagem.mAviso("Escolha um Tipo de Veículo e/ou informe um Modelo");
             }
         }

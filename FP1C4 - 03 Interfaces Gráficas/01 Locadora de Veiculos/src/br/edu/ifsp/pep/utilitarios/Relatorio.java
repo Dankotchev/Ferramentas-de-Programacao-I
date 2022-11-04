@@ -20,7 +20,7 @@ public class Relatorio {
 
             // Carrega o relatório
             InputStream relatorioCompilado = Relatorio.class
-                    .getResourceAsStream("/br/edu/ifsp/pep/relatorio/" + fileXML);
+                    .getResourceAsStream("/br/edu/ifsp/pep/locadoraveiculo/relatorio/" + fileXML);
 
             // Complilando o relatório
             JasperReport jasperReport = JasperCompileManager
@@ -44,7 +44,7 @@ public class Relatorio {
 
             // Carrega o relatório
             InputStream relatorioCompilado = Relatorio.class
-                    .getResourceAsStream("/br/edu/ifsp/pep/relatorio/" + fileJasper);
+                    .getResourceAsStream("/br/edu/ifsp/pep/locadoraveiculo/relatorio/" + fileJasper);
 
             // Preenche o relátorio com os dados
             JasperPrint jp = JasperFillManager.fillReport(relatorioCompilado, null, dataSource);

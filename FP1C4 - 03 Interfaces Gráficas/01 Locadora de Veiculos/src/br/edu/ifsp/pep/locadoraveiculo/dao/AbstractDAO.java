@@ -10,15 +10,9 @@ public abstract class AbstractDAO<T> {
 
     public AbstractDAO() {
         emf = Persistence
-//                .createEntityManagerFactory("PSQLLocadoraVeiculosInterfaceGraficaPU");
-                .createEntityManagerFactory("MySQLLocadoraVeiculosPU");
+                .createEntityManagerFactory("PSQLLocadoraVeiculosInterfaceGraficaPU");
     }
     
-//    public AbstractDAO() {
-//        emf = Persistence
-//                .createEntityManagerFactory("MySQLLocadoraVeiculosPU");
-//    }
-
     protected EntityManager getEntityManager() {
         return this.emf.createEntityManager();
     }
