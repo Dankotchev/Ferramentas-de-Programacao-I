@@ -1,17 +1,13 @@
 package br.edu.ifsp.pep.locadoraveiculo.visao;
 
-import br.edu.ifsp.pep.locadoraveiculo.dao.LocacaoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
-import br.edu.ifsp.pep.locadoraveiculo.modelo.Locacao;
+import br.edu.ifsp.pep.locadoraveiculo.modelo.Cliente;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
-import br.edu.ifsp.pep.locadoraveiculo.modelo.VeiculoLocado;
-import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
-import java.math.BigDecimal;
+import br.edu.ifsp.pep.utilitarios.Mensagem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class LocacaoView extends javax.swing.JDialog {
@@ -20,17 +16,20 @@ public class LocacaoView extends javax.swing.JDialog {
     private Date hoje = new Date();
     private VeiculoDAO veiculoDAO = new VeiculoDAO();
     private List<Veiculo> listaVeiculos = new ArrayList<>();
+    private Cliente cliente;
+
 
     public LocacaoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         this.atualizarComboBoxVeiculos();
         this.setDataAtual();
     }
 
     private void atualizarComboBoxVeiculos() {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) this.comboVeiculos.getModel();
-        modelo.addAll(veiculoDAO.buscarVeiculosDisponiveisParaLocacao());
+//        modelo.addAll(veiculoDAO.buscarVeiculosDisponiveisParaLocacao());
         this.comboVeiculos.setSelectedIndex(-1);
     }
 
@@ -82,12 +81,14 @@ public class LocacaoView extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaResumoLocacao = new javax.swing.JTable();
         jCalendarData = new com.toedter.calendar.JDateChooser();
+        btnBucarCliente = new javax.swing.JButton();
         painelBotoes = new javax.swing.JPanel();
         btnFinalizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Locação");
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
@@ -171,6 +172,14 @@ public class LocacaoView extends javax.swing.JDialog {
         jCalendarData.setDateFormatString("d '/' MM '/' y");
         jCalendarData.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
 
+        btnBucarCliente.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        btnBucarCliente.setText("Buscar");
+        btnBucarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBucarClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
@@ -184,22 +193,24 @@ public class LocacaoView extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(comboVeiculos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCliente)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBucarCliente))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
                         .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDadosLayout.createSequentialGroup()
-                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(painelDadosLayout.createSequentialGroup()
                                 .addComponent(labelQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(spinnerQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnAdicionar)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCliente)))
+                                .addComponent(btnAdicionar))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCalendarData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         painelDadosLayout.setVerticalGroup(
@@ -208,7 +219,8 @@ public class LocacaoView extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBucarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -404,6 +416,16 @@ public class LocacaoView extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnBucarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBucarClienteActionPerformed
+        String busca = this.txtCliente.getText();
+        ClienteView visaoCliente = new ClienteView(null, true);
+        this.setVisible(false);
+        visaoCliente.buscarCliente(busca);
+        visaoCliente.setVisible(true);
+        this.setVisible(true);
+  
+    }//GEN-LAST:event_btnBucarClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -448,6 +470,7 @@ public class LocacaoView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnBucarCliente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFinalizar;

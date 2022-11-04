@@ -2,7 +2,7 @@ package br.edu.ifsp.pep.locadoraveiculo.visao;
 
 import br.edu.ifsp.pep.locadoraveiculo.dao.ClienteDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Cliente;
-import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import br.edu.ifsp.pep.utilitarios.Mensagem;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,8 +19,10 @@ public class ClienteView extends javax.swing.JDialog {
     public ClienteView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         this.setEstadoBotoes(true);
         this.setEstadoCamposTexto(false);
+        this.btnSelecionar.setVisible(false);
 
     }
 
@@ -68,13 +70,33 @@ public class ClienteView extends javax.swing.JDialog {
         this.txtCPF.setText("09812345690");
     }
 
-    private void aposGravar(String mensagem,java.awt.event.ActionEvent evt) {
+    private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
         this.mensagem.mCorreto(mensagem);
         this.limparCampos();
         this.setEstadoBotoes(true);
         this.setEstadoCamposTexto(false);
         this.tabPainel.setSelectedIndex(0);
         this.btnPesquisaActionPerformed(evt);
+    }
+
+    public Cliente buscarCliente(String busca) {
+        java.awt.event.ActionEvent evt = null;
+        this.txtPesquisar.setText(busca);
+        this.btnAlterar.setVisible(false);
+        this.btnCancelar.setVisible(false);
+        this.btnExcluir.setVisible(false);
+        this.btnGravar.setVisible(false);
+        this.btnSelecionar.setVisible(true);
+
+        this.btnPesquisaActionPerformed(evt);
+
+        if (this.cliente != null) {
+            this.mensagem.mInformacao("Cliente Selecionado");
+            return this.cliente;
+        } else {
+            this.mensagem.mAtencao("Selecione um Cliente");
+        }
+        return this.cliente;
     }
 
     /**
@@ -108,6 +130,7 @@ public class ClienteView extends javax.swing.JDialog {
         btnExcluir = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnSelecionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
@@ -318,6 +341,14 @@ public class ClienteView extends javax.swing.JDialog {
             }
         });
 
+        btnSelecionar.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
+        btnSelecionar.setText("Selecionar");
+        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelBotoesPesquisaLayout = new javax.swing.GroupLayout(painelBotoesPesquisa);
         painelBotoesPesquisa.setLayout(painelBotoesPesquisaLayout);
         painelBotoesPesquisaLayout.setHorizontalGroup(
@@ -327,6 +358,8 @@ public class ClienteView extends javax.swing.JDialog {
                 .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSelecionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -346,8 +379,9 @@ public class ClienteView extends javax.swing.JDialog {
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelBotoesPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -491,6 +525,15 @@ public class ClienteView extends javax.swing.JDialog {
         this.limparCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+        if (this.tabelaClientes.getSelectedRow() >= 0) {
+            this.cliente = this.listaClientes.get(
+                    this.tabelaClientes.getSelectedRow());
+        } else {
+            this.mensagem.mAtencao("Nenhum Cliente selecionado");
+        }
+    }//GEN-LAST:event_btnSelecionarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -548,6 +591,7 @@ public class ClienteView extends javax.swing.JDialog {
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnPesquisa;
+    private javax.swing.JButton btnSelecionar;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelEndereco;

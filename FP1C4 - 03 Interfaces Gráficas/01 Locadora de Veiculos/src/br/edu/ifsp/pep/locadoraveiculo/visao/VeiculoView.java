@@ -4,7 +4,7 @@ import br.edu.ifsp.pep.locadoraveiculo.dao.TipoVeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.dao.VeiculoDAO;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.TipoVeiculo;
 import br.edu.ifsp.pep.locadoraveiculo.modelo.Veiculo;
-import br.edu.ifsp.pep.locadoraveiculo.utilitarios.Mensagem;
+import br.edu.ifsp.pep.utilitarios.Mensagem;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -112,8 +112,8 @@ public class VeiculoView extends javax.swing.JDialog {
         txtCidade = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(620, 420));
-        setMinimumSize(new java.awt.Dimension(620, 420));
+        setMaximumSize(new java.awt.Dimension(630, 430));
+        setMinimumSize(new java.awt.Dimension(630, 430));
         setPreferredSize(new java.awt.Dimension(630, 430));
         setResizable(false);
 
